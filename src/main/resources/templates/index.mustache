@@ -57,7 +57,7 @@ img.avatar {
 }
 
 span.psw {
-    float: right;
+
     padding-top: 16px;
 }
 
@@ -71,13 +71,262 @@ span.psw {
        width: 100%;
     }
 }
+h1 {
+    color: #008CBA;
+    text-align: center;
+}
+p.serif {
+    font-family: "Times New Roman", Times, serif;
+    text-align: center;
+}
+table, th, td {
+    border: 1px solid white;
+    border-collapse: collapse;
+    background-color: #dddddd;
+    text-align: left;
+    padding: 8px;
+
+
+}
+table {
+    width: 50%;
+    border-spacing: 5px;
+    margin: auto;
+}
+body {
+    background-color: lightblue;
+
+}
+input[type=text] {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid gray;
+    border-radius: 4px;
+}
+input[type=date] {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid gray;
+    border-radius: 4px;
+}
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.button {
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.item1 { grid-area: header;}
+.item2 { grid-area: menu; }
+.item3 { grid-area: main; }
+.item4 { grid-area: right; }
+.item5 { grid-area: footer; }
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+            'header header header header header header'
+            'menu main main main main right'
+            'footer footer footer footer footer footer';
+    grid-gap: 3px;
+    background-color: lightgrey;
+    padding: 10px;
+    grid-template-rows: 200px auto;
+
+}
+.grid-container > div {
+    background-color: aliceblue;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 30px;
+
+}
+ /*the container must be positioned relative:*/
+.select {
+  position: relative;
+  font-family: Arial;
+}
+.select select {
+  display: none; /*hide original SELECT element:*/
+}
+.select-selected {
+  background-color: DodgerBlue;
+}
+/*style the arrow inside the select element:*/
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+/*style the items (options), including the selected item:*/
+.select-items div,.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+}
+/*style items (options):*/
+.select-items {
+  position: absolute;
+  background-color: DodgerBlue;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+/*hide the items when the select box is closed:*/
+.select-hide {
+  display: none;
+}
+.select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
 </style>
 </head>
 <body>
 
 <center><h2>Welcome</h2></center>
+<center><h2>{{date}}</h2></center>
+<div>
+    <form action="/main" method="post">
+<h1>Meklet pec datuma</h1>
+        <br>
+        <input type="date" name="dateFrom", required="true">
 
 
+        <input type="submit"> <input type="reset">
+    </form>
+
+</div>
+<div>
+
+    <form action="/main" method="post">
+
+        <br>
+        <span class="psw"> <input type="text" name="lastName", required="true", placeholder="Vards"></span>
+       <span class="psw"> <input type="text" name="firstName", required="true", placeholder="Uzvards"></span>
+        <span class="psw"><input type="text" name="company", required="true", placeholder="Firma"></span>
+        <span class="psw"><input type="text" name="address", required="true", placeholder="Adrese"></span>
+        <input type="submit"> <input type="reset">
+    </form>
+
+</div>
+<h1>Sodienas viesi</h1>
+<div>
+
+    <table>
+
+        <tr>
+            <th>Npk</th>
+            <th>Vards</th>
+            <th>Uzvards</th>
+            <th>Firma</th>
+            <th>Adrese</th>
+            <th>Ienaksanas laiks</th>
+            <th>Iziesanas laiks</th>
+        </tr>
+    {{#visitors}}
+    <tr>
+        <td>{{visitorId}}</td>
+        <td>{{lastName}}</td>
+        <td>{{firstName}}</td>
+        <td>{{company}}</td>
+        <td>{{address}}</td>
+        <td>{{inTime}}</td>
+        <td>{{outTime}}</td>
+    </tr>
+
+    {{/visitors}}
+
+
+</table>
+</div>
+<div>
+    <form action="/main" method="post">
+        <h1>Atrast un atzimet viesi out</h1>
+        <br>
+        <input type="text" name="id", required="true">
+
+
+        <input type="submit"> <input type="reset">
+    </form>
+
+</div>
 
 </body>
 </html>
