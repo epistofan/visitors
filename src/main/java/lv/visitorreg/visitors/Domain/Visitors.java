@@ -12,6 +12,24 @@ public class Visitors {
         private String address;
         private Timestamp inTime;
         private Timestamp outTime;
+        private String cardNumber;
+        private int orderNumber;
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public int getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(int orderNumber) {
+        this.orderNumber = orderNumber;
+    }
 
     public String getVisitorId() {
         return visitorId;

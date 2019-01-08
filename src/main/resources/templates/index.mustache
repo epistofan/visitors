@@ -263,10 +263,10 @@ input[type=button], input[type=submit], input[type=reset] {
 <center><h2>Welcome</h2></center>
 <center><h2>{{date}}</h2></center>
 <div>
-    <form action="/main" method="post">
+    <form action="/selectByDate" method="post">
 <h1>Meklet pec datuma</h1>
         <br>
-        <input type="date" name="dateFrom", required="true">
+        <input type="date" name="selectedDate", required="true">
 
 
         <input type="submit"> <input type="reset">
@@ -275,13 +275,14 @@ input[type=button], input[type=submit], input[type=reset] {
 </div>
 <div>
 
-    <form action="/main" method="post">
+    <form action="/addVisitor" method="post">
 
         <br>
         <span class="psw"> <input type="text" name="lastName", required="true", placeholder="Vards"></span>
        <span class="psw"> <input type="text" name="firstName", required="true", placeholder="Uzvards"></span>
         <span class="psw"><input type="text" name="company", required="true", placeholder="Firma"></span>
         <span class="psw"><input type="text" name="address", required="true", placeholder="Adrese"></span>
+        <span class="psw"><input type="text" name="cardNumber", required="true", placeholder="Kartes numurs"></span>
         <input type="submit"> <input type="reset">
     </form>
 
@@ -317,7 +318,7 @@ input[type=button], input[type=submit], input[type=reset] {
 </table>
 </div>
 <div>
-    <form action="/main" method="post">
+    <form action="/selectById" method="post">
         <h1>Atrast un atzimet viesi out</h1>
         <br>
         <input type="text" name="id", required="true">
