@@ -4,16 +4,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
 body {font-family: Arial, Helvetica, sans-serif;}
-form {border: 3px solid #f1f1f1;
-        width: 550px;
+
+form {border: 0px solid #f1f1f1;
+
+        margin: auto;
+
+
+        }
+form1 {border: 1px solid white;
+
         margin: auto;
 
 
         }
 
+span.a {
+  display: inline-block; /* the default for span */
+  width: 150px;
+  height: 50px;
+
+  padding: 12px;
+
+
+}
+
 input[type=text], input[type=password] {
 
-    width:500px;
+    width:100px;
     padding: 12px 20px;
     margin: 8px 0;
     display: block;
@@ -75,6 +92,10 @@ h1 {
     color: #008CBA;
     text-align: center;
 }
+h2 {
+
+    text-align: center;
+}
 p.serif {
     font-family: "Times New Roman", Times, serif;
     text-align: center;
@@ -98,7 +119,7 @@ body {
 
 }
 input[type=text] {
-    width: 50%;
+    width: 150px;
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
@@ -106,7 +127,7 @@ input[type=text] {
     border-radius: 4px;
 }
 input[type=date] {
-    width: 50%;
+    width: 200px;
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
@@ -114,16 +135,16 @@ input[type=date] {
     border-radius: 4px;
 }
 input[type=button], input[type=submit], input[type=reset] {
-    background-color: #4CAF50;
+    background-color: #0080ff;
     border: none;
     color: white;
     padding: 16px 32px;
     text-decoration: none;
-    margin: 4px 2px;
+    margin: auto;
     cursor: pointer;
 }
 .button {
-    background-color: #008CBA;
+    background-color: #0080ff;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -152,13 +173,13 @@ input[type=button], input[type=submit], input[type=reset] {
     grid-template-rows: 200px auto;
 
 }
-.grid-container > div {
-    background-color: aliceblue;
-    text-align: center;
-    padding: 20px 0;
-    font-size: 30px;
+<!--.grid-container > div {-->
+    <!--background-color: aliceblue;-->
+    <!--text-align: center;-->
+    <!--padding: 20px 0;-->
+    <!--font-size: 30px;-->
 
-}
+<!--}-->
  /*the container must be positioned relative:*/
 .select {
   position: relative;
@@ -187,13 +208,13 @@ input[type=button], input[type=submit], input[type=reset] {
   top: 7px;
 }
 /*style the items (options), including the selected item:*/
-.select-items div,.select-selected {
-  color: #ffffff;
-  padding: 8px 16px;
-  border: 1px solid transparent;
-  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
-  cursor: pointer;
-}
+<!--.select-items div,.select-selected {-->
+  <!--color: #ffffff;-->
+  <!--padding: 8px 16px;-->
+  <!--border: 1px solid transparent;-->
+  <!--border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;-->
+  <!--cursor: pointer;-->
+<!--}-->
 /*style items (options):*/
 .select-items {
   position: absolute;
@@ -260,34 +281,11 @@ input[type=button], input[type=submit], input[type=reset] {
 </head>
 <body>
 
-<center><h2>Welcome</h2></center>
+<center><h1>Laipni ludzam</h1></center>
 <center><h2>{{date}}</h2></center>
-<div>
-    <form action="/selectByDate" method="post">
-<h1>Meklet pec datuma</h1>
-        <br>
-        <input type="date" name="selectedDate", required="true">
 
 
-        <input type="submit"> <input type="reset">
-    </form>
-
-</div>
-<div>
-
-    <form action="/addVisitor" method="post">
-
-        <br>
-        <span class="psw"> <input type="text" name="lastName", required="true", placeholder="Vards"></span>
-       <span class="psw"> <input type="text" name="firstName", required="true", placeholder="Uzvards"></span>
-        <span class="psw"><input type="text" name="company", required="true", placeholder="Firma"></span>
-        <span class="psw"><input type="text" name="address", required="true", placeholder="Adrese"></span>
-        <span class="psw"><input type="text" name="cardNumber", required="true", placeholder="Kartes numurs"></span>
-        <input type="submit"> <input type="reset">
-    </form>
-
-</div>
-<h1>Sodienas viesi</h1>
+<h2>Sodienas viesi</h2>
 <div>
 
     <table>
@@ -318,16 +316,41 @@ input[type=button], input[type=submit], input[type=reset] {
 </table>
 </div>
 <div>
-    <form action="/selectById" method="post">
-        <h1>Atrast un atzimet viesi out</h1>
+
+    <form action="/addVisitor" method="post">
+
         <br>
-        <input type="text" name="id", required="true">
-
-
-        <input type="submit"> <input type="reset">
+        <center>    <span class="a"> <input type="text" name="lastName", required="true", placeholder="Vards"></span>
+            <span class="a"> <input type="text" name="firstName", required="true", placeholder="Uzvards"></span>
+            <span class="a"><input type="text" name="company", required="true", placeholder="Firma"></span>
+            <span class="a"><input type="text" name="address", required="true", placeholder="Adrese"></span>
+            <span class="a"><input type="text" name="cardNumber", required="true", placeholder="Kartes numurs"></span>
+            <br>
+            <input type="submit"> <input type="reset"></center>
     </form>
 
 </div>
+<div>
+    <form action="/selectById" method="post">
+        <h2>Atrast un atzimet uz iziesanu</h2>
 
+      <center>  <input type="text" name="id", required="true", placeholder="ievadiet Npk">
+
+
+        <input type="submit"> <input type="reset"></center>
+    </form>
+
+</div>
+<div>
+    <form action="/selectByDate" method="post">
+        <h2>Meklet pec datuma</h2>
+
+        <center> <input type="date" name="selectedDate", required="true">
+
+            <br>
+            <input type="submit"> <input type="reset"></center>
+    </form>
+
+</div>
 </body>
 </html>
