@@ -28,15 +28,6 @@ span.a {
 
 }
 
-input[type=text], input[type=password] {
-
-    width:100px;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-}
 
 button {
     background-color: #4CAF50;
@@ -110,7 +101,7 @@ table, th, td {
 
 }
 table {
-    width: 50%;
+    width: 80%;
     border-spacing: 5px;
     margin: auto;
 }
@@ -118,6 +109,16 @@ body {
     background-color: lightblue;
 
 }
+input[type=text], input[type=password] {
+
+    width: 150px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid gray;
+    border-radius: 4px;
+}
+
 input[type=text] {
     width: 150px;
     padding: 12px 20px;
@@ -281,33 +282,45 @@ input[type=button], input[type=submit], input[type=reset] {
 </head>
 <body>
 
-<center><h1>Laipni ludzam</h1></center>
+<center><h1>Laipni lūdzam!</h1></center>
 <center><h2>${date}</h2></center>
 
 
-<h2>Sodienas viesi</h2>
+<h2>K-1 dienas viesi</h2>
 <div>
 
     <table>
 
         <tr>
-            <th>Npk</th>
-            <th>Vards</th>
-            <th>Uzvards</th>
+            <th>Nr.p.k.</th>
+            <th>Ienākšanas datums</th>
+            <th>Ienākšanas laiks</th>
+            <th>Iziešanas datums</th>
+            <th>Iziešanas laiks</th>
+            <th>Vārds</th>
+            <th>Uzvārds</th>
+            <th>Caurlaides nr.</th>
             <th>Firma</th>
-            <th>Adrese</th>
-            <th>Ienaksanas laiks</th>
-            <th>Iziesanas laiks</th>
+            <th>Atbildīga persona</th>
+            <th>Telpas nr.</th>
+            <th>Paraksts</th>
+
         </tr>
         <#list visitors as visitor>
         <tr>
-            <td>${visitor.visitorId}</td>
-            <td>${visitor.lastName}</td>
-            <td>${visitor.firstName}</td>
-            <td>${visitor.company}</td>
-            <td>${visitor.address}</td>
+            <td>${visitor.orderNumber}</td>
+            <td>${visitor.inDate}</td>
             <td>${visitor.inTime}</td>
+            <td><#if visitor.outDate??>${visitor.outDate}</#if></td>
             <td><#if visitor.outTime??>${visitor.outTime}</#if></td>
+            <td>${visitor.firstName}</td>
+            <td>${visitor.lastName}</td>
+            <td>${visitor.cardNumber}</td>
+            <td>${visitor.company}</td>
+            <td>${visitor.responsiblePerson}</td>
+            <td>${visitor.roomName}</td>
+            <td><#if visitor.responsiblePersonIdentity??>${visitor.responsiblePersonIdentity}</#if></td>
+
         </tr>
 
         </#list>
@@ -320,23 +333,29 @@ input[type=button], input[type=submit], input[type=reset] {
     <form action="/addVisitor" method="post">
 
         <br>
-        <center>    <span class="a"> <input type="text" name="lastName", required="true", placeholder="Vards"></span>
-            <span class="a"> <input type="text" name="firstName", required="true", placeholder="Uzvards"></span>
+        <center>
+            <span class="a"> <input type="text" name="firstName", required="true", placeholder="Vārds"></span>
+            <span class="a"> <input type="text" name="lastName", required="true", placeholder="Uzvārds"></span>
+
+            <span class="a"><input type="text" name="cardNumber", required="true", placeholder="Caurlaides nr."></span>
+
             <span class="a"><input type="text" name="company", required="true", placeholder="Firma"></span>
-            <span class="a"><input type="text" name="address", required="true", placeholder="Adrese"></span>
-            <span class="a"><input type="text" name="cardNumber", required="true", placeholder="Kartes numurs"></span>
+            <span class="a"><input type="text" name="responsiblePerson", required="true", placeholder="Atbildīga persona"></span>
+            <span class="a"><input type="text" name="roomName", required="true", placeholder="Telpas nr."></span>
+
             <br>
-            <input type="submit"> <input type="reset"></center>
+            <input type="submit"> <input type="reset">
+        </center>
     </form>
 
 </div>
 <div>
-    <form action="/selectById" method="post">
-        <h2>Atrast un atzimet uz iziesanu</h2>
+    <form action="/addVisitorOutTimeByOrderNumber" method="post">
+        <h2>Atzīmet uz iziešanu</h2>
 
-        <center>  <input type="text" name="id", required="true", placeholder="ievadiet Npk">
-
-
+        <center>  <input type="text" name="orderNumber", required="true", placeholder="Nr.p.k.">
+            <input type="password" name="password", required="true", placeholder="Atbildīgas personas parole">
+<br>
             <input type="submit"> <input type="reset"></center>
     </form>
 

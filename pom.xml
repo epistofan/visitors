@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>lv.visitorreg</groupId>
-	<artifactId>visitors</artifactId>
+	<artifactId>visitor</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>visitors</name>
+	<name>visitor</name>
 	<description>Project for Spring Boot</description>
 
 	<properties>

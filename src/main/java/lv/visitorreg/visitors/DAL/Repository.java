@@ -1,10 +1,10 @@
 package lv.visitorreg.visitors.DAL;
 
-import lv.visitorreg.visitors.Domain.Visitors;
+import lv.visitorreg.visitors.Domain.ResponsiblePerson;
+import lv.visitorreg.visitors.Domain.Visitor;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,21 +18,21 @@ public class Repository {
     Statement statement = null;
     PreparedStatement preparedStatement = null;
     java.sql.Connection conn = null;
+    String test;
 
 
-
-    public List<Visitors> selectVisitors(String date){
+    public List<Visitor> selectVisitors(String date){
         ResultSet resultSet = null;
         Statement statement = null;
         PreparedStatement preparedStatement = null;
         java.sql.Connection conn = null;
         DbConnection dbConnection  = new DbConnection ();
 
-        String sql = "Select* from Visitors where DATEPART(yy, inTime)=? and DATEPART(mm, inTime)=? and DATEPART(dd, inTime)=? ORDER BY Visitors.InTime";
+        String sql = "Select* from visitorOfK1 where DATEPART(yy, inDate)=? and DATEPART(mm, inDate)=? and DATEPART(dd, inDate)=? ORDER BY visitorOfK1.InTime";
 
         List<String> dates = new ArrayList(Arrays.asList(date.split("\\D"))) ;
 
-        List<Visitors> visitorsList = new ArrayList<>();
+        List<Visitor> visitorList = new ArrayList<>();
 
         try {
             conn = dbConnection.getDbConnection();
@@ -47,16 +47,21 @@ public class Repository {
             int i = 0;
             while (resultSet.next()) {
 
-                Visitors visitors = new Visitors();
-                visitors.setVisitorId(resultSet.getString(1));
-                visitors.setLastName(resultSet.getString(2));
-                visitors.setFirstName(resultSet.getString(3));
-                visitors.setCompany(resultSet.getString(4));
-                visitors.setAddress(resultSet.getString(5));
-                visitors.setInTime(resultSet.getTimestamp(6));
-                visitors.setOutTime(resultSet.getTimestamp(7));
-                visitors.setCardNumber(resultSet.getString(8));
-                visitorsList.add(i, visitors);
+                Visitor visitor = new Visitor();
+                visitor.setOrderNumber(resultSet.getInt(2));
+                visitor.setInDate(resultSet.getTimestamp(3));
+                visitor.setInTime(resultSet.getTimestamp(4));
+                visitor.setOutDate(resultSet.getTimestamp(5));
+                visitor.setOutTime(resultSet.getTimestamp(6));
+                visitor.setFirstName(resultSet.getString(7));
+                visitor.setLastName(resultSet.getString(8));
+                visitor.setCardNumber(resultSet.getString(9));
+                visitor.setCompany(resultSet.getString(10));
+                visitor.setResponsiblePerson(resultSet.getString(11));
+
+                visitor.setRoomName(resultSet.getString(12));
+                visitor.setResponsiblePersonIdentity(resultSet.getString(13));
+                visitorList.add(i, visitor);
                 i++;
             }
 
@@ -66,76 +71,35 @@ public class Repository {
         }
 
 
-        return visitorsList;
+        return visitorList;
     }
 
-    public List<Visitors> selectVisitorsById(String id){
-        ResultSet resultSet = null;
-        Statement statement = null;
-        PreparedStatement preparedStatement = null;
-        java.sql.Connection conn = null;
-        DbConnection dbConnection  = new DbConnection ();
 
-        String sql = "Select* from Visitors where VisitorId = ?";
-
-
-
-        List<Visitors> visitorsListById = new ArrayList<>();
-
-        try {
-            conn = dbConnection.getDbConnection();
-            preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, id);
-
-            resultSet = preparedStatement.executeQuery();
-
-
-            int i = 0;
-            while (resultSet.next()) {
-
-                Visitors visitors = new Visitors();
-                visitors.setVisitorId(resultSet.getString(1));
-                visitors.setLastName(resultSet.getString(2));
-                visitors.setFirstName(resultSet.getString(3));
-                visitors.setCompany(resultSet.getString(4));
-                visitors.setAddress(resultSet.getString(5));
-                visitors.setInTime(resultSet.getTimestamp(6));
-                visitors.setOutTime(resultSet.getTimestamp(7));
-                visitors.setCardNumber(resultSet.getString(8));
-                visitorsListById.add(i, visitors);
-                i++;
-            }
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
-        return visitorsListById;
-    }
-
-    public void addVisitors(Visitors visitor){
+    public void addVisitors(Visitor visitor){
 
         ResultSet resultSet = null;
         Statement statement = null;
         PreparedStatement preparedStatement = null;
         java.sql.Connection conn = null;
 
-        String sql = "insert into Visitors (LastName, FirstName, Company, Adress, CardNumber, OrderNumber)" +
-                "values (?, ?, ?, ?, ?, '1')";
+        String sql = "insert into visitorOfK1 (OrderNumber, FirstName, LastName,  CardNumber, Company, roomNumber, ResponsiblePerson )" +
+                "values (?, ?, ?, ?, ?, ?, ?)";
 
-               List<Visitors> visitorsList = new ArrayList<>();
+               List<Visitor> visitorList = new ArrayList<>();
         try {
             DbConnection dbConnection  = new DbConnection ();
             conn = dbConnection.getDbConnection();
             preparedStatement = conn.prepareStatement(sql);
 
-            preparedStatement.setString(1, visitor.getLastName());
+            preparedStatement.setInt(1, visitor.getOrderNumber());
             preparedStatement.setString(2, visitor.getFirstName());
-            preparedStatement.setString(3, visitor.getCompany());
-            preparedStatement.setString(4, visitor.getAddress());
-            preparedStatement.setString(5, visitor.getCardNumber());
+            preparedStatement.setString(3, visitor.getLastName());
+            preparedStatement.setString(4, visitor.getCardNumber());
+            preparedStatement.setString(5, visitor.getCompany());
+            preparedStatement.setString(6, visitor.getRoomName());
+
+            preparedStatement.setString(7, visitor.getResponsiblePerson());
+
 
             preparedStatement.execute();
 
@@ -145,7 +109,54 @@ public class Repository {
 
     }
 
-    public void addVisitorsOutTime(LocalDateTime localDateTime, String id){
+
+    public List<ResponsiblePerson> selectResponsiblePerson(String password){
+        ResultSet resultSet = null;
+        Statement statement = null;
+        PreparedStatement preparedStatement = null;
+        java.sql.Connection conn = null;
+
+        String sql = "Select* from responsiblePerson where Password = ?";
+
+        try {
+            DbConnection dbConnection  = new DbConnection ();
+            conn = dbConnection.getDbConnection();
+            preparedStatement = conn.prepareStatement(sql);
+
+            preparedStatement.setString(1, password);
+
+            resultSet = preparedStatement.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        List<ResponsiblePerson> responsiblePersonList = new ArrayList<>();
+
+        try {
+
+            int i = 0;
+            while (resultSet.next()) {
+
+                ResponsiblePerson responsiblePerson = new ResponsiblePerson();
+                responsiblePerson.setPersonId(resultSet.getInt(1));
+                responsiblePerson.setResponsiblePerson(resultSet.getString(2));
+                responsiblePerson.setPassword(resultSet.getString(3));
+                responsiblePersonList.add(i, responsiblePerson);
+                i++;
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return responsiblePersonList;
+    }
+
+
+    public void addVisitorsOutTime(LocalDateTime localDateTime, String orderNumber, String responsiblePerson1){
 
         ResultSet resultSet = null;
         Statement statement = null;
@@ -154,16 +165,19 @@ public class Repository {
 
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
 
-        String sql = "UPDATE Visitors SET OutTime = ? WHERE VisitorID = ?";
 
-        List<Visitors> visitorsList = new ArrayList<>();
+        String sql = "UPDATE visitorOfK1 SET OutTime = ?, OutDate=?, ResponsiblePersonIdentity = ? WHERE OrderNumber = ?";
+
+        List<Visitor> visitorList = new ArrayList<>();
         try {
             DbConnection dbConnection  = new DbConnection ();
             conn = dbConnection.getDbConnection();
             preparedStatement = conn.prepareStatement(sql);
 
             preparedStatement.setTimestamp(1, timestamp);
-            preparedStatement.setInt(2, Integer.valueOf(id));
+            preparedStatement.setTimestamp(2, timestamp);
+            preparedStatement.setString(3, responsiblePerson1);
+            preparedStatement.setInt(4, Integer.valueOf(orderNumber));
 
 
             preparedStatement.execute();
@@ -173,4 +187,6 @@ public class Repository {
         }
 
     }
+
+
 }

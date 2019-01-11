@@ -3,17 +3,69 @@ package lv.visitorreg.visitors.Domain;
 
 import java.sql.Timestamp;
 
-public class Visitors {
+public class Visitor {
 
         private String visitorId;
-        private String lastName;
-        private String firstName;
-        private String company;
-        private String address;
+
+        private Timestamp inDate;
         private Timestamp inTime;
+        private Timestamp outDate;
         private Timestamp outTime;
+        private String firstName;
+        private String lastName;
+
         private String cardNumber;
+        private String company;
+        private String responsiblePerson;
+        private String roomName;
         private int orderNumber;
+        private String responsiblePersonIdentity;
+
+
+    public String getResponsiblePerson() {
+        return responsiblePerson;
+    }
+
+    public void setResponsiblePerson(String responsiblePerson) {
+        this.responsiblePerson = responsiblePerson;
+    }
+
+
+
+
+    public String getResponsiblePersonIdentity() {
+        return responsiblePersonIdentity;
+    }
+
+    public void setResponsiblePersonIdentity(String responsiblePersonIdentity) {
+        this.responsiblePersonIdentity = responsiblePersonIdentity;
+    }
+
+    public Timestamp getInDate() {
+        return inDate;
+    }
+
+    public void setInDate(Timestamp inDate) {
+        this.inDate = inDate;
+    }
+
+    public Timestamp getOutDate() {
+        return outDate;
+    }
+
+    public void setOutDate(Timestamp outDate) {
+        this.outDate = outDate;
+    }
+
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
 
     public String getCardNumber() {
         return cardNumber;
@@ -63,15 +115,7 @@ public class Visitors {
         this.company = company;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Timestamp getInTime() {
+       public Timestamp getInTime() {
         return inTime;
     }
 

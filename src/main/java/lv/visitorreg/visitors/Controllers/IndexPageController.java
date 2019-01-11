@@ -2,11 +2,13 @@ package lv.visitorreg.visitors.Controllers;
 
 
 import lv.visitorreg.visitors.DAL.Repository;
-import lv.visitorreg.visitors.Domain.Visitors;
+import lv.visitorreg.visitors.Domain.ResponsiblePerson;
+import lv.visitorreg.visitors.Domain.Visitor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -17,6 +19,8 @@ import java.util.Map;
 public class IndexPageController {
 
     int i;
+
+    int orderNumberCounter = 1;
 
     @Autowired
     Repository repository;
@@ -31,8 +35,8 @@ public class IndexPageController {
         System.out.println(localDate.toString());
 
         //Timestamp timestamp = Timestamp.valueOf(localDate);
-       // List<Visitors> visitors = repository.selectPerson();
-        List<Visitors> visitors = repository.selectVisitors(localDate.toString());
+       // List<Visitor> visitors = repository.selectPerson();
+        List<Visitor> visitors = repository.selectVisitors(localDate.toString());
         if (visitors.isEmpty()){
             i=0;
         }
@@ -44,18 +48,33 @@ public class IndexPageController {
     }
 
     @RequestMapping(value = "/addVisitor", method = RequestMethod.POST)
-    public String addVisitor(String firstName, String lastName, String company, String address, String cardNumber, Map<String, Object> model) {
+    public String addVisitor(String firstName, String lastName, String cardNumber, String company, String responsiblePerson, String roomName,  Map<String, Object> model) {
 
-        Visitors visitor = new Visitors();
+        LocalDate localDate = LocalDate.now();
+        List<Visitor> visitors1 = repository.selectVisitors(localDate.toString());
+
+        if(visitors1.isEmpty()){
+            orderNumberCounter = 1;
+
+        }else{
+
+            orderNumberCounter = visitors1.size() ;
+        }
+
+       
+
+        Visitor visitor = new Visitor();
+        visitor.setOrderNumber(orderNumberCounter);
         visitor.setFirstName(firstName);
         visitor.setLastName(lastName);
         visitor.setCompany(company);
-        visitor.setAddress(address);
+        visitor.setResponsiblePerson(responsiblePerson);
         visitor.setCardNumber(cardNumber);
+        visitor.setRoomName(roomName);
 
         repository.addVisitors(visitor);
-        LocalDate localDate = LocalDate.now();
-        List<Visitors> visitors = repository.selectVisitors(localDate.toString());
+
+        List<Visitor> visitors = repository.selectVisitors(localDate.toString());
 
 
        model.put("visitors", visitors);
@@ -71,32 +90,49 @@ public class IndexPageController {
 
 
         System.out.println("working!");
-        List<Visitors> visitors = repository.selectVisitors(selectedDate);
-
-        LocalDate localDate = LocalDate.of(2019, 01, 07);
+        List<Visitor> visitors = repository.selectVisitors(selectedDate);
 
         model.put("visitors", visitors);
-        model.put("date", localDate);
+        model.put("date", selectedDate);
 
         return "index";
     }
 
-    @RequestMapping(value = "/selectById", method = RequestMethod.POST)
-    public String selectById(String id, Map<String, Object> model) {
+    @RequestMapping(value = "/addVisitorOutTimeByOrderNumber", method = RequestMethod.POST)
+    public String addVisitorOutTimeByOrderNumber(String orderNumber, String password, Map<String, Object> model) {
 
 
-        System.out.println("working!");
+
 
         LocalDateTime localDateTime = LocalDateTime.now();
 
-        repository.addVisitorsOutTime(localDateTime, id);
-        LocalDate localDate = LocalDate.now();
+        if (!repository.selectResponsiblePerson(password).isEmpty()) {
 
-        List<Visitors> visitors = repository.selectVisitors(localDate.toString());
+            List<ResponsiblePerson> responsiblePerson = repository.selectResponsiblePerson(password);
 
-        model.put("visitors", visitors);
-        model.put("date", localDate);
+            String responsiblePerson1 = responsiblePerson.get(0).getResponsiblePerson();
 
-        return "index";
+            repository.addVisitorsOutTime(localDateTime, orderNumber, responsiblePerson1);
+
+            LocalDate localDate = LocalDate.now();
+
+            List<Visitor> visitors = repository.selectVisitors(localDate.toString());
+
+            model.put("visitors", visitors);
+            model.put("date", localDate);
+            System.out.println("working add out time!");
+            return "index";
+        }else{
+            LocalDate localDate = LocalDate.now();
+
+            List<Visitor> visitors = repository.selectVisitors(localDate.toString());
+
+            model.put("visitors", visitors);
+            model.put("date", localDate);
+            System.out.println("working else add out time!");
+            return "index";
+        }
+
+
     }
 }
