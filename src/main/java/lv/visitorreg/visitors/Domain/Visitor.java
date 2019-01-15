@@ -1,13 +1,21 @@
 package lv.visitorreg.visitors.Domain;
 
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Visitor {
 
         private String visitorId;
 
-        private Timestamp inDate;
+        private String inDateString;
+        private String inTimeString;
+        private String outDateString;
+        private String outTimeString;
+       private Timestamp inDate;
         private Timestamp inTime;
         private Timestamp outDate;
         private Timestamp outTime;
@@ -21,8 +29,24 @@ public class Visitor {
         private int orderNumber;
         private String responsiblePersonIdentity;
 
+    public String getOutDateString() {
+        return outDateString;
+    }
 
+    public void setOutDateString(String outDateString) {
+        this.outDateString = outDateString;
+    }
+
+    public String getOutTimeString() {
+        return outTimeString;
+    }
+
+    public void setOutTimeString(String outTimeString) {
+        this.outTimeString = outTimeString;
+    }
     public String getResponsiblePerson() {
+
+
         return responsiblePerson;
     }
 
@@ -31,6 +55,21 @@ public class Visitor {
     }
 
 
+    public String getInDateString() {
+        return inDateString;
+    }
+
+    public void setInDateString(String inDateString) {
+        this.inDateString = inDateString;
+    }
+
+    public String getInTimeString() {
+        return inTimeString;
+    }
+
+    public void setInTimeString(String inTimeString) {
+        this.inTimeString = inTimeString;
+    }
 
 
     public String getResponsiblePersonIdentity() {

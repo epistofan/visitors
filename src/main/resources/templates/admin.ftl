@@ -90,39 +90,21 @@ h2 {
 p.serif {
     font-family: "Times New Roman", Times, serif;
     text-align: center;
-
+}
+table, th, td {
+    border: 1px solid white;
+    border-collapse: collapse;
+    background-color: #dddddd;
+    text-align: left;
+    padding: 8px;
 
 
 }
 table {
     width: 90%;
-    border-spacing: 1px;
+    border-spacing: 5px;
     margin: auto;
 }
-td {
-    border: 1px solid white;
-    border-collapse: collapse;
-
-    text-align: center;
-    padding: 8px;
-
-}
-th {
-    border: 1px solid white;
-    border-collapse: collapse;
-    background-color: #99ddff;
-    text-align: center;
-    padding: 8px;
-
-}
-
-
-
-tr:nth-child(even) {
-  background-color: #e6e6e6;
-
-}
-
 body {
     background-color: lightblue;
 
@@ -161,31 +143,6 @@ input[type=button], input[type=submit], input[type=reset] {
     text-decoration: none;
     margin: auto;
     cursor: pointer;
-}
-
-/* The alert message box */
-.alert {
-  padding: 20px;
-  background-color: #f44336; /* Red */
-  color: white;
-  margin-bottom: 15px;
-}
-
-/* The close button */
-.closebtn {
-  margin-left: 15px;
-  color: white;
-  font-weight: bold;
-  float: right;
-  font-size: 22px;
-  line-height: 20px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-/* When moving the mouse over the close button */
-.closebtn:hover {
-  color: black;
 }
 .button {
     background-color: #0080ff;
@@ -349,15 +306,13 @@ input[type=button], input[type=submit], input[type=reset] {
             <th>Paraksts</th>
 
         </tr>
-
-
-            <#list visitors as visitor>
+        <#list visitors as visitor>
         <tr>
             <td>${visitor.orderNumber}</td>
             <td>${visitor.inDateString}</td>
             <td>${visitor.inTimeString}</td>
-            <td><#if visitor.outDateString??>${visitor.outDateString}</#if> </td>
-            <td><#if visitor.outTimeString??>${visitor.outTimeString}</#if> </td>
+            <td><#if visitor.outDate??>${visitor.outDate}</#if></td>
+            <td><#if visitor.outTime??>${visitor.outTime}</#if></td>
             <td>${visitor.firstName}</td>
             <td>${visitor.lastName}</td>
             <td>${visitor.cardNumber}</td>
@@ -365,8 +320,11 @@ input[type=button], input[type=submit], input[type=reset] {
             <td>${visitor.responsiblePerson}</td>
             <td>${visitor.roomName}</td>
             <td><#if visitor.responsiblePersonIdentity??>${visitor.responsiblePersonIdentity}</#if></td>
+
         </tr>
+
         </#list>
+
 
     </table>
 </div>
@@ -396,7 +354,7 @@ input[type=button], input[type=submit], input[type=reset] {
         <h2>Atzīmet uz iziešanu</h2>
 
         <center>  <input type="text" name="orderNumber", required="true", placeholder="Nr.p.k.">
-            <input type="password" name="password", required="true", placeholder="Parole">
+            <input type="password" name="password", required="true", placeholder="Atbildīgas personas parole">
 <br>
             <input type="submit"> <input type="reset"></center>
     </form>
@@ -406,15 +364,6 @@ input[type=button], input[type=submit], input[type=reset] {
     <form action="/selectByDate" method="post">
         <h2>Meklet pec datuma</h2>
 
-
-
-        <script>
-if ('<#if response??>${response}</#if>'!= 0) {
-
-  alert('<#if response??>${response}</#if>');
-}
-</script>
-
         <center> <input type="date" name="selectedDate", required="true">
 
             <br>
@@ -422,7 +371,5 @@ if ('<#if response??>${response}</#if>'!= 0) {
     </form>
 
 </div>
-
-
 </body>
 </html>

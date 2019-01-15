@@ -40,10 +40,10 @@ public class IndexPageController {
         if (visitors.isEmpty()){
             i=0;
         }
-
+        String response = null;
        model.put("visitors", visitors);
        model.put("date", localDate);
-
+        model.put("response", response);
         return "index";
     }
 
@@ -61,7 +61,7 @@ public class IndexPageController {
             orderNumberCounter = visitors1.size() ;
         }
 
-       
+
 
         Visitor visitor = new Visitor();
         visitor.setOrderNumber(orderNumberCounter);
@@ -76,9 +76,10 @@ public class IndexPageController {
 
         List<Visitor> visitors = repository.selectVisitors(localDate.toString());
 
-
+        String response = null;
        model.put("visitors", visitors);
         model.put("date", localDate);
+        model.put("response", response);
 
         return "index";
     }
@@ -91,10 +92,10 @@ public class IndexPageController {
 
         System.out.println("working!");
         List<Visitor> visitors = repository.selectVisitors(selectedDate);
-
+        String response = null;
         model.put("visitors", visitors);
         model.put("date", selectedDate);
-
+        model.put("response", response);
         return "index";
     }
 
@@ -115,11 +116,12 @@ public class IndexPageController {
             repository.addVisitorsOutTime(localDateTime, orderNumber, responsiblePerson1);
 
             LocalDate localDate = LocalDate.now();
-
+            String response = null;
             List<Visitor> visitors = repository.selectVisitors(localDate.toString());
 
             model.put("visitors", visitors);
             model.put("date", localDate);
+            model.put("response", response);
             System.out.println("working add out time!");
             return "index";
         }else{
@@ -129,7 +131,9 @@ public class IndexPageController {
 
             model.put("visitors", visitors);
             model.put("date", localDate);
-            System.out.println("working else add out time!");
+            String response = "Atbildīga persona nav atrasta";
+            System.out.println("nav atrasta atbildiga persona!");
+            model.put("response", response);
             return "index";
         }
 

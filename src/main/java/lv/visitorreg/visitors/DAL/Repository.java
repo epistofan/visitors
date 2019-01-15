@@ -5,7 +5,9 @@ import lv.visitorreg.visitors.Domain.Visitor;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,15 +46,27 @@ public class Repository {
             resultSet = preparedStatement.executeQuery();
 
 
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            DateTimeFormatter dateTimeFormatter1 = DateTimeFormatter.ofPattern("HH:mm");
+
             int i = 0;
             while (resultSet.next()) {
 
                 Visitor visitor = new Visitor();
                 visitor.setOrderNumber(resultSet.getInt(2));
-                visitor.setInDate(resultSet.getTimestamp(3));
-                visitor.setInTime(resultSet.getTimestamp(4));
-                visitor.setOutDate(resultSet.getTimestamp(5));
-                visitor.setOutTime(resultSet.getTimestamp(6));
+                //visitor.setInDate(resultSet.getTimestamp(3));
+               visitor.setInDateString(resultSet.getTimestamp(3).toLocalDateTime().toLocalDate().format(dateTimeFormatter));
+                //visitor.setInTime(resultSet.getTimestamp(4));
+                visitor.setInTimeString(resultSet.getTimestamp(4).toLocalDateTime().toLocalTime().format(dateTimeFormatter1));
+try {
+    //visitor.setOutDate(resultSet.getTimestamp(5));
+    visitor.setOutDateString(resultSet.getTimestamp(5).toLocalDateTime().toLocalDate().format(dateTimeFormatter));
+
+    //visitor.setOutTime(resultSet.getTimestamp(6));
+    visitor.setOutTimeString(resultSet.getTimestamp(6).toLocalDateTime().toLocalTime().format(dateTimeFormatter1));
+}catch (NullPointerException npe){
+
+}
                 visitor.setFirstName(resultSet.getString(7));
                 visitor.setLastName(resultSet.getString(8));
                 visitor.setCardNumber(resultSet.getString(9));
