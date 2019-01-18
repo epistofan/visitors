@@ -79,31 +79,7 @@
     </form>
 
 </div>-->
-<br>
-<button class="open-button" onclick="openForm()">Atzīmet uz iziešanu</button>
-<div class="form-popup" id="myForm">
-    <form action="/addVisitorOutTimeByOrderNumber" method="post" class="form-container">
-        <h2>Atzīmet uz iziešanu</h2>
 
-        <center>  <input type="text" name="orderNumber", required="true", placeholder="Nr.p.k.">
-            <input type="password" name="password", required="true", placeholder="Parole">
-            <br>
-            <input type="submit">
-
-        <button type="button" class="btn cancel" onclick="closeForm()">Close</button></center>
-    </form>
-</div>
-
-<script>
-function openForm() {
-  document.getElementById("myForm").style.display = "block";
-}
-
-function closeForm() {
-  document.getElementById("myForm").style.display = "none";
-}
-</script>
-<br>
 
 <div class="sticky">
 
@@ -161,7 +137,31 @@ function closeForm1() {
   document.getElementById("myForm2").style.display = "none";
 }
 </script>
+<br>
+<button class="open-button" onclick="openForm()">Atzīmet uz iziešanu</button>
+<div class="form-popup" id="myForm">
+    <form action="/addVisitorOutTimeByOrderNumber" method="post" class="form-container">
+        <h2>Atzīmet uz iziešanu</h2>
 
+        <center>  <input type="text" name="orderNumber", required="true", placeholder="Nr.p.k.">
+            <input type="password" name="password", required="true", placeholder="Parole">
+            <br>
+            <input type="submit">
+
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button></center>
+    </form>
+</div>
+
+<script>
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+</script>
+<br>
 
 
 
