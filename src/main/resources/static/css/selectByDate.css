@@ -9,19 +9,17 @@ body {font-family: Arial, Helvetica, sans-serif;}
   border: none;
   cursor: pointer;
   opacity: 0.8;
-  position: fixed;
-  top: 23px;
-  right: 28px;
+position: relative;
+margin: 10px;
   width: 280px;
 }
 
 /* The popup form - hidden by default */
-.form-popup1 {
+.form-popupS {
   display: none;
-  position: fixed;
+  position: sticky;
   bottom: 0;
   right: 15px;
-  border: 3px solid #f1f1f1;
   z-index: 9;
 }
 
@@ -48,7 +46,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 }
 
 /* Set a style for the submit/login button */
-.form-container .btn {
+.form-container1 .btn {
   background-color: #4CAF50;
   color: white;
   padding: 16px 20px;
@@ -65,6 +63,6 @@ body {font-family: Arial, Helvetica, sans-serif;}
 }
 
 /* Add some hover effects to buttons */
-.form-container .btn:hover, .open-button:hover {
+.form-container1 .btn:hover, .open-button:hover {
   opacity: 1;
 }

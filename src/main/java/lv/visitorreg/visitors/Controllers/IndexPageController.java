@@ -58,7 +58,7 @@ public class IndexPageController {
 
         }else{
 
-            orderNumberCounter = visitors1.size() ;
+            orderNumberCounter = (visitors1.size()+1);
         }
 
 

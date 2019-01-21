@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="css/style.css" rel="stylesheet">
     <link href="css/popupStyle.css" rel="stylesheet">
-    <link href="css/popup1Style.css" rel="stylesheet">
+    <link href="css/selectByDate.css" rel="stylesheet">
+    <link href="css/popup2Style.css" rel="stylesheet">
 
 </head>
 <body>
@@ -16,7 +17,7 @@
 
 <h2>K-1 dienas viesi</h2>
 
-<div>
+<div class="col-3">
 
     <table>
 
@@ -35,7 +36,6 @@
             <th>Paraksts</th>
 
         </tr>
-
 
             <#list visitors as visitor>
         <tr>
@@ -57,51 +57,6 @@
     </table>
 </div>
 
-<!--<div>
-    <form action="/addVisitorOutTimeByOrderNumber" method="post">
-        <h2>Atzīmet uz iziešanu</h2>
-
-        <center>  <input type="text" name="orderNumber", required="true", placeholder="Nr.p.k.">
-            <input type="password" name="password", required="true", placeholder="Parole">
-<br>
-            <input type="submit"> <input type="reset"></center>
-    </form>
-
-</div>-->
-<!--<div>
-    <form action="/selectByDate" method="post">
-        <h2>Meklēt pēc datuma</h2>
-
-        <center> <input type="date" name="selectedDate", required="true">
-
-            <br>
-            <input type="submit"> <input type="reset"></center>
-    </form>
-
-</div>-->
-
-
-<div class="sticky">
-
-    <form action="/addVisitor" method="post">
-
-        <br>
-        <center>
-            <span class="a"> <input type="text" name="firstName", required="true", placeholder="Vārds"></span>
-            <span class="a"> <input type="text" name="lastName", required="true", placeholder="Uzvārds"></span>
-
-            <span class="a"><input type="text" name="cardNumber", required="true", placeholder="Caurlaides nr."></span>
-
-            <span class="a"><input type="text" name="company", required="true", placeholder="Firma"></span>
-            <span class="a"><input type="text" name="responsiblePerson", required="true", placeholder="Atbildīga persona"></span>
-            <span class="a"><input type="text" name="roomName", required="true", placeholder="Telpas nr."></span>
-
-            <br>
-            <input type="submit"> <input type="reset">
-        </center>
-    </form>
-
-</div>
 <script>
 let div = document.createElement('div');
 div.className = "alert";
@@ -113,10 +68,16 @@ document.body.appendChild(div);
 setTimeout(() => div.remove(), 2000);
 }
 </script>
+<div>
+<center>
+    <button class="open-button" onclick="openForm1()">Meklēt pēc datuma</button>
+    <button class="open-button" onclick="openForm3()">Reģistrēt viesi</button>
+    <button class="open-button" onclick="openForm()">Atzīmet uz iziešanu</button>
+</center>
+</div>
 
-<button class="open-button1" onclick="openForm1()">Meklēt pēc datuma</button>
-    <div class="form-popup1" id="myForm2">
-        <form action="/selectByDate" method="post" class="form-container1">
+   <div class="form-popup" id="myForm2">
+        <form action="/selectByDate" method="post" class="form-container">
             <h2>Meklēt pēc datuma</h2>
 
             <center> <input type="date" name="selectedDate", required="true">
@@ -138,7 +99,7 @@ function closeForm1() {
 }
 </script>
 <br>
-<button class="open-button" onclick="openForm()">Atzīmet uz iziešanu</button>
+
 <div class="form-popup" id="myForm">
     <form action="/addVisitorOutTimeByOrderNumber" method="post" class="form-container">
         <h2>Atzīmet uz iziešanu</h2>
@@ -161,8 +122,36 @@ function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
 </script>
-<br>
 
+<div class="form-popup" id="myForm3">
+    <form action="/addVisitor" method="post" class="form-container">
+        <h2>Reģistrēt viesi</h2>
+<center>
+        <span class="a"> <input type="text" name="firstName", required="true", placeholder="Vārds"></span>
+        <span class="a"> <input type="text" name="lastName", required="true", placeholder="Uzvārds"></span>
+
+        <span class="a"><input type="text" name="cardNumber", required="true", placeholder="Caurlaides nr."></span>
+
+        <span class="a"><input type="text" name="company", required="true", placeholder="Firma"></span>
+        <span class="a"><input type="text" name="responsiblePerson", required="true", placeholder="Atbildīga persona"></span>
+        <span class="a"><input type="text" name="roomName", required="true", placeholder="Telpas nr."></span>
+
+        <br>
+        <input type="submit">
+            <button type="button" class="btn cancel" onclick="closeForm3()">Close</button
+</center>
+    </form>
+</div>
+
+<script>
+function openForm3() {
+  document.getElementById("myForm3").style.display = "block";
+}
+
+function closeForm3() {
+  document.getElementById("myForm3").style.display = "none";
+}
+</script>
 
 
 </body>

@@ -180,7 +180,7 @@ try {
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
 
 
-        String sql = "UPDATE visitorOfK1 SET OutTime = ?, OutDate=?, ResponsiblePersonIdentity = ? WHERE OrderNumber = ?";
+        String sql = "UPDATE visitorOfK1 SET OutTime = ?, OutDate=?, ResponsiblePersonIdentity = ? WHERE OrderNumber = ? and InDate = ?";
 
         List<Visitor> visitorList = new ArrayList<>();
         try {
