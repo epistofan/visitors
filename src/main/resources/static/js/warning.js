@@ -8,3 +8,4 @@ div.innerHTML = '<#if response??>${response}</#if>';
 document.body.appendChild(div);
 setTimeout(() => div.remove(), 2000);
 }
+

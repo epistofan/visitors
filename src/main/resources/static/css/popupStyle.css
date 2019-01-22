@@ -3,6 +3,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 /* Button used to open the contact form - fixed at the bottom of the page */
 .open-button {
+font-size: 15px;
   background-color: #555;
   color: white;
   padding: 16px 20px;
@@ -59,7 +60,7 @@ margin: 10px;
 
 /* Add a red background color to the cancel button */
 .form-container .cancel {
-  background-color: red;
+  background-color: #80aaff;
 }
 
 /* Add some hover effects to buttons */

@@ -57,21 +57,10 @@
     </table>
 </div>
 
-<script>
-let div = document.createElement('div');
-div.className = "alert";
-if ('<#if response??>${response}</#if>'!= 0) {
-
-div.innerHTML = '<#if response??>${response}</#if>';
-
-document.body.appendChild(div);
-setTimeout(() => div.remove(), 2000);
-}
-</script>
-<div>
+<div class="sticky">
 <center>
     <button class="open-button" onclick="openForm1()">Meklēt pēc datuma</button>
-    <button class="open-button" onclick="openForm3()">Reģistrēt viesi</button>
+    <button class="open-button" onclick="openForm3()" id="button">Reģistrēt viesi</button>
     <button class="open-button" onclick="openForm()">Atzīmet uz iziešanu</button>
 </center>
 </div>
@@ -152,6 +141,38 @@ function closeForm3() {
   document.getElementById("myForm3").style.display = "none";
 }
 </script>
+
+<script>
+let div = document.createElement('div');
+div.className = "alert";
+if ('<#if response??>${response}</#if>'!= 0) {
+
+div.innerHTML = '<#if response??>${response}</#if>';
+
+document.body.appendChild(div);
+setTimeout(() => div.remove(), 2000);
+}
+</script>
+
+
+
+
+<script>
+function func() {
+
+document.getElementById('button').style.backgroundColor = "#80aaff";
+}
+
+function func1() {
+document.getElementById('button').style.backgroundColor = "gray";
+}
+setInterval(func, 1000);
+
+setInterval(func1, 3000);
+
+</script>
+
+
 
 
 </body>

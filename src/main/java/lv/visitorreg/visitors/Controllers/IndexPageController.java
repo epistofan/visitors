@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,8 @@ import java.util.Map;
 public class IndexPageController {
 
     int i;
-
+    int j;
+    Timestamp inDate;
     int orderNumberCounter = 1;
 
     @Autowired
@@ -106,6 +108,7 @@ public class IndexPageController {
 
 
         LocalDateTime localDateTime = LocalDateTime.now();
+        LocalDate localDate = LocalDate.now();
 
         if (!repository.selectResponsiblePerson(password).isEmpty()) {
 
@@ -113,11 +116,25 @@ public class IndexPageController {
 
             String responsiblePerson1 = responsiblePerson.get(0).getResponsiblePerson();
 
-            repository.addVisitorsOutTime(localDateTime, orderNumber, responsiblePerson1);
+            List<Visitor> visitors1 = repository.selectVisitors(localDate.toString());
 
-            LocalDate localDate = LocalDate.now();
+            for(j=0; j<visitors1.size(); j++){
+                if(visitors1.get(j).getOrderNumber() == Integer.valueOf(orderNumber)){
+                    inDate = visitors1.get(j).getInDate();
+
+                }else {
+                    System.out.println("Order number not found");
+                }
+
+            }
+
+
+            repository.addVisitorsOutTime(localDateTime, orderNumber, responsiblePerson1, inDate);
+
+
             String response = null;
             List<Visitor> visitors = repository.selectVisitors(localDate.toString());
+
 
             model.put("visitors", visitors);
             model.put("date", localDate);
@@ -125,7 +142,7 @@ public class IndexPageController {
             System.out.println("working add out time!");
             return "index";
         }else{
-            LocalDate localDate = LocalDate.now();
+            //LocalDate localDate = LocalDate.now();
 
             List<Visitor> visitors = repository.selectVisitors(localDate.toString());
 

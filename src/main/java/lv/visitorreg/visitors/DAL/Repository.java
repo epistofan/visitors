@@ -54,9 +54,9 @@ public class Repository {
 
                 Visitor visitor = new Visitor();
                 visitor.setOrderNumber(resultSet.getInt(2));
-                //visitor.setInDate(resultSet.getTimestamp(3));
+                visitor.setInDate(resultSet.getTimestamp(3));
                visitor.setInDateString(resultSet.getTimestamp(3).toLocalDateTime().toLocalDate().format(dateTimeFormatter));
-                //visitor.setInTime(resultSet.getTimestamp(4));
+                visitor.setInTime(resultSet.getTimestamp(4));
                 visitor.setInTimeString(resultSet.getTimestamp(4).toLocalDateTime().toLocalTime().format(dateTimeFormatter1));
 try {
     //visitor.setOutDate(resultSet.getTimestamp(5));
@@ -170,7 +170,7 @@ try {
     }
 
 
-    public void addVisitorsOutTime(LocalDateTime localDateTime, String orderNumber, String responsiblePerson1){
+    public void addVisitorsOutTime(LocalDateTime localDateTime, String orderNumber, String responsiblePerson1, Timestamp inDate){
 
         ResultSet resultSet = null;
         Statement statement = null;
@@ -192,7 +192,7 @@ try {
             preparedStatement.setTimestamp(2, timestamp);
             preparedStatement.setString(3, responsiblePerson1);
             preparedStatement.setInt(4, Integer.valueOf(orderNumber));
-
+            preparedStatement.setTimestamp(5, inDate);
 
             preparedStatement.execute();
 
