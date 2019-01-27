@@ -17,7 +17,7 @@
 
 <h2>K-1 dienas viesi</h2>
 
-<div class="col-3">
+<div class="col-3" id="table">
 
     <table>
 
@@ -172,7 +172,25 @@ setInterval(func1, 3000);
 
 </script>
 
+<script>
+function printContent(el){
 
+	var restorepage = document.body.innerHTML;
+	var printcontent = document.getElementById(el).innerHTML;
+
+	document.body.innerHTML = printcontent;
+	window.print();
+	document.body.innerHTML = restorepage;
+}
+</script>
+<button onclick="printContent('table')">Print Content</button>
+
+
+<footer>
+    <center><p>@2019. Posted by: Hege Refsnes</p>
+    <p>Contact information: <a href="mailto:someone@example.com">someone@example.com</a>.</p>
+    </center>
+</footer>
 
 
 </body>
