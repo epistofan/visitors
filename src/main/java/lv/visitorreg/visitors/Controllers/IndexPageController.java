@@ -4,6 +4,7 @@ package lv.visitorreg.visitors.Controllers;
 import lv.visitorreg.visitors.DAL.Repository;
 import lv.visitorreg.visitors.Domain.ResponsiblePerson;
 import lv.visitorreg.visitors.Domain.Visitor;
+import lv.visitorreg.visitors.Logics.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class IndexPageController {
     @Autowired
     Repository repository;
 
-    @GetMapping("/")
+    @PostMapping("/index")
     public String index(Map<String, Object> model) {
 
 
@@ -62,8 +63,17 @@ public class IndexPageController {
 
             orderNumberCounter = (visitors1.size()+1);
         }
+        List<String> parameters = new ArrayList<>();
+            parameters.add(firstName);
+            parameters.add(lastName);
+            parameters.add(cardNumber);
+            parameters.add(company);
+            parameters.add(responsiblePerson);
+            parameters.add(roomName);
 
 
+        Validator validator = new Validator();
+        validator.validate(parameters);
 
         Visitor visitor = new Visitor();
         visitor.setOrderNumber(orderNumberCounter);

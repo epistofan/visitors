@@ -1,0 +1,30 @@
+
+CREATE TABLE visitorOfK1 (
+    VisitorId int identity(1,1),
+	OrderNumber int,
+	InDate datetime Default(getdate()),
+	InTime datetime Default(getdate()),
+	OutDate datetime,
+	OutTime datetime,
+    FirstName varchar(50),
+    LastName varchar(50),
+	CardNumber varchar(3),
+    Company varchar(50),
+	ResponsiblePerson varchar(50),
+
+    RoomNumber varchar(50),
+	ResponsiblePersonIdentity varchar(50),
+    PRIMARY KEY (VisitorId)
+);
+
+CREATE INDEX idx_onid
+ON visitorOfK1 (OrderNumber, InDate);
+
+
+CREATE TABLE accessUser (
+    UserId int identity(1,1),
+	UserName varchar(50),
+	UserPassword varchar(50),
+	AccessPoint varchar(50),
+
+);

@@ -183,12 +183,25 @@ function printContent(el){
 	document.body.innerHTML = restorepage;
 }
 </script>
-<button onclick="printContent('table')">Print Content</button>
 
 
+<script>
+
+    function openWin() {
+    var divText = document.getElementById("table").outerHTML;
+
+    var myWindow = window.open('', '', 'width=700,height=400');
+
+    myWindow.document.write(divText);
+   
+
+
+}
+</script>
+<a href="#" onclick="openWin()">click</a>
 <footer>
-    <center><p>@2019. Posted by: Hege Refsnes</p>
-    <p>Contact information: <a href="mailto:someone@example.com">someone@example.com</a>.</p>
+    <center><p>@2019. Posted by: ...</p>
+    <p>Contact information: version 0.1</p>
     </center>
 </footer>
 
