@@ -21,7 +21,7 @@ public class LoginPageController {
 
         LocalDate localDate = LocalDate.now();
 
-        System.out.println("hello");
+        System.out.println("hello-LoginController");
         System.out.println(localDate.toString());
 
 
@@ -33,7 +33,7 @@ public class LoginPageController {
     public String login(String userName, String passWord) {
 
 
-        System.out.println("hello2");
+        System.out.println("hello2-LoginController");
 
 
         return "login";

@@ -28,6 +28,25 @@ public class Visitor {
         private String roomName;
         private int orderNumber;
         private String responsiblePersonIdentity;
+        private int UserId;
+        private String accessPoint;
+
+
+    public String getAccessPoint() {
+        return accessPoint;
+    }
+
+    public void setAccessPoint(String accessPoint) {
+        this.accessPoint = accessPoint;
+    }
+
+    public int getUserId() {
+        return UserId;
+    }
+
+    public void setUserId(int userId) {
+        UserId = userId;
+    }
 
     public String getOutDateString() {
         return outDateString;

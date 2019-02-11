@@ -2,9 +2,11 @@ package lv.visitorreg.visitors;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-//@WebFilter(urlPatterns = "/*")
+//@WebFilter(urlPatterns = "/index/*")
 public class Filter1 implements Filter {
 
 
@@ -19,8 +21,9 @@ public class Filter1 implements Filter {
         System.out.println("-");
         System.out.println("filter 1");
         System.out.println("-");
-        filterChain.doFilter(servletRequest, servletResponse);
 
+
+filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

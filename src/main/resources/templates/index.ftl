@@ -15,7 +15,7 @@
 <center><h2>${date}</h2></center>
 
 
-<h2>K-1 dienas viesi</h2>
+<h2>${accessPoint} dienas viesi</h2>
 
 <div class="col-3" id="table">
 
@@ -90,7 +90,7 @@ function closeForm1() {
 <br>
 
 <div class="form-popup" id="myForm">
-    <form action="/addVisitorOutTimeByOrderNumber" method="post" class="form-container">
+    <form action="/addVisitorOutTime" method="post" class="form-container">
         <h2>Atzīmet uz iziešanu</h2>
 
         <center>  <input type="text" name="orderNumber", required="true", placeholder="Nr.p.k.">
@@ -127,7 +127,7 @@ function closeForm() {
 
         <br>
         <input type="submit">
-            <button type="button" class="btn cancel" onclick="closeForm3()">Close</button
+            <button type="button" class="btn cancel" onclick="closeForm3()">Close</button>
 </center>
     </form>
 </div>
@@ -198,7 +198,10 @@ function printContent(el){
 
 }
 </script>
-<a href="#" onclick="openWin()">click</a>
+<center>
+<a href="#" onclick="openWin()">click to print version</a>
+</center>
+
 <footer>
     <center><p>@2019. Posted by: ...</p>
     <p>Contact information: version 0.1</p>

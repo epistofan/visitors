@@ -1,6 +1,7 @@
 package lv.visitorreg.visitors;
 
 import lv.visitorreg.visitors.DAL.UserChekRepo;
+import lv.visitorreg.visitors.Domain.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.*;
@@ -30,18 +31,26 @@ public class Filter2 implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        System.out.println(servletRequest.getParameter("uname"));
+
+
+        System.out.println(servletRequest.getParameter("username"));
         System.out.println(servletRequest.getParameter("psw"));
 
-
-        if(!userChekRepo.checkLoginUser(servletRequest.getParameter("uname"),servletRequest.getParameter("psw")).getUsername().isEmpty()) {
-            rdObj = servletRequest.getRequestDispatcher("/index");
+        LoginUser loginUser;
+        loginUser = userChekRepo.checkLoginUser(servletRequest.getParameter("username"),servletRequest.getParameter("psw"));
+        if(loginUser == null) {
+            rdObj = servletRequest.getRequestDispatcher("/login");
 
 
             rdObj.forward(servletRequest, servletResponse);
-            filterChain.doFilter(servletRequest, servletResponse);
-        }else{
-            rdObj = servletRequest.getRequestDispatcher("/login");
+
+       }else{
+
+            loginUser.setUserId(loginUser.getUserId());
+            loginUser.setUsername(servletRequest.getParameter("username"));
+            request.getSession().setAttribute("UserID", loginUser);
+
+            rdObj = servletRequest.getRequestDispatcher("/index");
 
 
             rdObj.forward(servletRequest, servletResponse);

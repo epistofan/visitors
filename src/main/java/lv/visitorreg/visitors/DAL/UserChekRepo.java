@@ -16,14 +16,9 @@ import java.util.List;
 public class UserChekRepo {
 
 
-    ResultSet resultSet = null;
-    Statement statement = null;
-    PreparedStatement preparedStatement = null;
-    java.sql.Connection conn = null;
-
-
-
     public LoginUser checkLoginUser(String username, String password){
+
+        LoginUser loginUser1 = null;
         ResultSet resultSet = null;
         Statement statement = null;
         PreparedStatement preparedStatement = null;
@@ -40,31 +35,31 @@ public class UserChekRepo {
 
             resultSet = preparedStatement.executeQuery();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
-        LoginUser loginUser = new LoginUser();
-        try {
-if(!resultSet.next()){System.out.println("null");}
             int i = 0;
             while (resultSet.next()) {
 
-
+                LoginUser loginUser = new LoginUser();
+                loginUser.setUserId(resultSet.getInt(1));
                 loginUser.setUsername(resultSet.getString(2));
                 loginUser.setPassword(resultSet.getString(3));
                 loginUser.setAccessPoint(resultSet.getString(4));
                 i++;
+                loginUser1 = loginUser;
             }
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
 
+        if(loginUser1 == null)
+            {
+                return null;
+            }else {
 
-
-        return loginUser;
+                return loginUser1;
+            }
     }
 
 

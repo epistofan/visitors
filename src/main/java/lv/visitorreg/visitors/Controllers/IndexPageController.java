@@ -2,13 +2,17 @@ package lv.visitorreg.visitors.Controllers;
 
 
 import lv.visitorreg.visitors.DAL.Repository;
+import lv.visitorreg.visitors.DAL.UserChekRepo;
+import lv.visitorreg.visitors.Domain.LoginUser;
 import lv.visitorreg.visitors.Domain.ResponsiblePerson;
 import lv.visitorreg.visitors.Domain.Visitor;
 import lv.visitorreg.visitors.Logics.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,41 +24,56 @@ import java.util.Map;
 @Controller
 public class IndexPageController {
 
-    int i;
-    int j;
-    Timestamp inDate;
-    int orderNumberCounter = 1;
-
+            
     @Autowired
     Repository repository;
+    @Autowired
+    UserChekRepo userChekRepo;
+
 
     @PostMapping("/index")
-    public String index(Map<String, Object> model) {
+    public String index(String username, String psw, Map<String, Object> model) {
 
+        int i;
+        String accessPoint;
+        int UserId;
+        LoginUser LoginUser;
+
+        LoginUser = userChekRepo.checkLoginUser(username, psw);
+        UserId = LoginUser.getUserId();
+        accessPoint = LoginUser.getAccessPoint();
 
         LocalDate localDate = LocalDate.now();
 
-        System.out.println("hello");
+        System.out.println("hello-IndexController/index");
         System.out.println(localDate.toString());
 
-        //Timestamp timestamp = Timestamp.valueOf(localDate);
-       // List<Visitor> visitors = repository.selectPerson();
-        List<Visitor> visitors = repository.selectVisitors(localDate.toString());
+        List<Visitor> visitors = repository.selectVisitors(UserId, localDate.toString());
         if (visitors.isEmpty()){
             i=0;
         }
         String response = null;
        model.put("visitors", visitors);
        model.put("date", localDate);
+        model.put("accessPoint", accessPoint);
         model.put("response", response);
         return "index";
     }
 
     @RequestMapping(value = "/addVisitor", method = RequestMethod.POST)
-    public String addVisitor(String firstName, String lastName, String cardNumber, String company, String responsiblePerson, String roomName,  Map<String, Object> model) {
+    public String addVisitor(HttpSession httpSession, String firstName, String lastName, String cardNumber, String company, String responsiblePerson, String roomName, Map<String, Object> model) {
+        int orderNumberCounter;
+        String accessPoint;
+        int UserId;
+        LoginUser LoginUser;
 
+        LoginUser loginUser = (LoginUser)httpSession.getAttribute("UserID");
+        UserId = loginUser.getUserId();
+
+
+        System.out.println("hello-IndexController/addVisitor");
         LocalDate localDate = LocalDate.now();
-        List<Visitor> visitors1 = repository.selectVisitors(localDate.toString());
+        List<Visitor> visitors1 = repository.selectVisitors(UserId, localDate.toString());
 
         if(visitors1.isEmpty()){
             orderNumberCounter = 1;
@@ -83,14 +102,17 @@ public class IndexPageController {
         visitor.setResponsiblePerson(responsiblePerson);
         visitor.setCardNumber(cardNumber);
         visitor.setRoomName(roomName);
+        visitor.setUserId(UserId);
 
         repository.addVisitors(visitor);
 
-        List<Visitor> visitors = repository.selectVisitors(localDate.toString());
+        List<Visitor> visitors = repository.selectVisitors(UserId, localDate.toString());
+        accessPoint = loginUser.getAccessPoint();
 
         String response = null;
        model.put("visitors", visitors);
         model.put("date", localDate);
+        model.put("accessPoint", accessPoint);
         model.put("response", response);
 
         return "index";
@@ -99,23 +121,34 @@ public class IndexPageController {
 
 
     @RequestMapping(value = "/selectByDate", method = RequestMethod.POST)
-    public String selectByDate(String selectedDate, Map<String, Object> model) {
+    public String selectByDate(HttpSession httpSession, String selectedDate, Map<String, Object> model) {
+        String accessPoint;
+        int UserId;
 
-
+        LoginUser loginUser = (LoginUser)httpSession.getAttribute("UserID");
+        UserId = loginUser.getUserId();
+        accessPoint = loginUser.getAccessPoint();
         System.out.println("working!");
-        List<Visitor> visitors = repository.selectVisitors(selectedDate);
+        List<Visitor> visitors = repository.selectVisitors(UserId, selectedDate);
         String response = null;
+
+
         model.put("visitors", visitors);
         model.put("date", selectedDate);
         model.put("response", response);
+        model.put("accessPoint", accessPoint);
         return "index";
     }
 
-    @RequestMapping(value = "/addVisitorOutTimeByOrderNumber", method = RequestMethod.POST)
-    public String addVisitorOutTimeByOrderNumber(String orderNumber, String password, Map<String, Object> model) {
+    @RequestMapping(value = "/addVisitorOutTime", method = RequestMethod.POST)
+    public String addVisitorOutTimeByOrderNumber(HttpSession httpSession, String orderNumber, String password, Map<String, Object> model) {
 
-
-
+        int j;
+        int UserId;
+        Timestamp inDate = null;
+        LoginUser loginUser = (LoginUser)httpSession.getAttribute("UserID");
+        UserId = loginUser.getUserId();
+        String accessPoint = loginUser.getAccessPoint();
 
         LocalDateTime localDateTime = LocalDateTime.now();
         LocalDate localDate = LocalDate.now();
@@ -126,7 +159,7 @@ public class IndexPageController {
 
             String responsiblePerson1 = responsiblePerson.get(0).getResponsiblePerson();
 
-            List<Visitor> visitors1 = repository.selectVisitors(localDate.toString());
+            List<Visitor> visitors1 = repository.selectVisitors(UserId, localDate.toString());
 
             for(j=0; j<visitors1.size(); j++){
                 if(visitors1.get(j).getOrderNumber() == Integer.valueOf(orderNumber)){
@@ -143,27 +176,28 @@ public class IndexPageController {
 
 
             String response = null;
-            List<Visitor> visitors = repository.selectVisitors(localDate.toString());
+            List<Visitor> visitors = repository.selectVisitors(UserId, localDate.toString());
 
 
             model.put("visitors", visitors);
             model.put("date", localDate);
             model.put("response", response);
+            model.put("accessPoint", accessPoint);
             System.out.println("working add out time!");
             return "index";
         }else{
             //LocalDate localDate = LocalDate.now();
 
-            List<Visitor> visitors = repository.selectVisitors(localDate.toString());
+            List<Visitor> visitors = repository.selectVisitors(UserId, localDate.toString());
 
             model.put("visitors", visitors);
             model.put("date", localDate);
             String response = "Atbildīga persona nav atrasta";
             System.out.println("nav atrasta atbildiga persona!");
             model.put("response", response);
+            model.put("accessPoint", accessPoint);
             return "index";
         }
-
 
     }
 }

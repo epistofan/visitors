@@ -16,21 +16,14 @@ import java.util.List;
 public class Repository {
 
 
-    ResultSet resultSet = null;
-    Statement statement = null;
-    PreparedStatement preparedStatement = null;
-    java.sql.Connection conn = null;
-    String test;
-
-
-    public List<Visitor> selectVisitors(String date){
+    public List<Visitor> selectVisitors(int UserId, String date){
         ResultSet resultSet = null;
         Statement statement = null;
         PreparedStatement preparedStatement = null;
         java.sql.Connection conn = null;
         DbConnection dbConnection  = new DbConnection ();
 
-        String sql = "Select* from visitorOfK1 where DATEPART(yy, inDate)=? and DATEPART(mm, inDate)=? and DATEPART(dd, inDate)=? ORDER BY visitorOfK1.InTime";
+        String sql = "Select* from visitorOfK1 where DATEPART(yy, inDate)=? and DATEPART(mm, inDate)=? and DATEPART(dd, inDate)=? and UserID=? ORDER BY visitorOfK1.InTime";
 
         List<String> dates = new ArrayList(Arrays.asList(date.split("\\D"))) ;
 
@@ -42,6 +35,7 @@ public class Repository {
             preparedStatement.setString(1, dates.get(0));
             preparedStatement.setString(2, dates.get(1));
             preparedStatement.setString(3, dates.get(2));
+            preparedStatement.setInt(4, UserId);
 
             resultSet = preparedStatement.executeQuery();
 
@@ -96,8 +90,8 @@ try {
         PreparedStatement preparedStatement = null;
         java.sql.Connection conn = null;
 
-        String sql = "insert into visitorOfK1 (OrderNumber, FirstName, LastName,  CardNumber, Company, roomNumber, ResponsiblePerson )" +
-                "values (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into visitorOfK1 (OrderNumber, FirstName, LastName,  CardNumber, Company, roomNumber, ResponsiblePerson, UserID )" +
+                "values (?, ?, ?, ?, ?, ?, ?, ?)";
 
                List<Visitor> visitorList = new ArrayList<>();
         try {
@@ -113,7 +107,7 @@ try {
             preparedStatement.setString(6, visitor.getRoomName());
 
             preparedStatement.setString(7, visitor.getResponsiblePerson());
-
+            preparedStatement.setInt(8, visitor.getUserId());
 
             preparedStatement.execute();
 
