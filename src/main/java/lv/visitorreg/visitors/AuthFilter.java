@@ -1,6 +1,7 @@
 package lv.visitorreg.visitors;
 
-import lv.visitorreg.visitors.DAL.UserChekRepo;
+import lv.visitorreg.visitors.DAL.UserCheckRepo;
+
 import lv.visitorreg.visitors.Domain.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,10 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = "/login")
-public class Filter2 implements Filter {
+public class AuthFilter implements Filter {
 
     @Autowired
-    UserChekRepo userChekRepo;
+    UserCheckRepo userCheckRepo;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -25,7 +26,7 @@ public class Filter2 implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         RequestDispatcher rdObj = null;
         System.out.println("**");
-        System.out.println("filter 2");
+        System.out.println("Auth filter");
         System.out.println("**");
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
@@ -37,7 +38,7 @@ public class Filter2 implements Filter {
         System.out.println(servletRequest.getParameter("psw"));
 
         LoginUser loginUser;
-        loginUser = userChekRepo.checkLoginUser(servletRequest.getParameter("username"),servletRequest.getParameter("psw"));
+        loginUser = userCheckRepo.checkLoginUser(servletRequest.getParameter("username"),servletRequest.getParameter("psw"));
         if(loginUser == null) {
             rdObj = servletRequest.getRequestDispatcher("/login");
 

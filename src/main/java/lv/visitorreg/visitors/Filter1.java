@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-//@WebFilter(urlPatterns = "/index/*")
+@WebFilter(urlPatterns = "/addVisitor")
 public class Filter1 implements Filter {
 
 
@@ -17,13 +17,27 @@ public class Filter1 implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
+        RequestDispatcher rdObj = null;
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        request.getSession().getAttribute("UserID");
         System.out.println("-");
         System.out.println("filter 1");
         System.out.println("-");
+        if(request.getSession().getAttribute("UserID")== null) {
+            rdObj = servletRequest.getRequestDispatcher("/login");
+
+            rdObj.forward(servletRequest, servletResponse);
+        }else {
+            rdObj = servletRequest.getRequestDispatcher("/index");
+
+            rdObj.forward(servletRequest, servletResponse);
+        }
 
 
-filterChain.doFilter(servletRequest, servletResponse);
+
+
+
     }
 
     @Override

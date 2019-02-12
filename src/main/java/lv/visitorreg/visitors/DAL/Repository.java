@@ -90,8 +90,8 @@ try {
         PreparedStatement preparedStatement = null;
         java.sql.Connection conn = null;
 
-        String sql = "insert into visitorOfK1 (OrderNumber, FirstName, LastName,  CardNumber, Company, roomNumber, ResponsiblePerson, UserID )" +
-                "values (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into visitorOfK1 (OrderNumber, FirstName, LastName,  CardNumber, Company, roomNumber, ResponsiblePerson, UserID, AccessPoint )" +
+                "values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
                List<Visitor> visitorList = new ArrayList<>();
         try {
@@ -108,6 +108,7 @@ try {
 
             preparedStatement.setString(7, visitor.getResponsiblePerson());
             preparedStatement.setInt(8, visitor.getUserId());
+            preparedStatement.setString(9, visitor.getAccessPoint());
 
             preparedStatement.execute();
 

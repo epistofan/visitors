@@ -2,7 +2,8 @@ package lv.visitorreg.visitors.Controllers;
 
 
 import lv.visitorreg.visitors.DAL.Repository;
-import lv.visitorreg.visitors.DAL.UserChekRepo;
+import lv.visitorreg.visitors.DAL.UserCheckRepo;
+
 import lv.visitorreg.visitors.Domain.LoginUser;
 import lv.visitorreg.visitors.Domain.ResponsiblePerson;
 import lv.visitorreg.visitors.Domain.Visitor;
@@ -28,7 +29,7 @@ public class IndexPageController {
     @Autowired
     Repository repository;
     @Autowired
-    UserChekRepo userChekRepo;
+    UserCheckRepo userCheckRepo;
 
 
     @PostMapping("/index")
@@ -39,7 +40,7 @@ public class IndexPageController {
         int UserId;
         LoginUser LoginUser;
 
-        LoginUser = userChekRepo.checkLoginUser(username, psw);
+        LoginUser = userCheckRepo.checkLoginUser(username, psw);
         UserId = LoginUser.getUserId();
         accessPoint = LoginUser.getAccessPoint();
 
@@ -69,7 +70,7 @@ public class IndexPageController {
 
         LoginUser loginUser = (LoginUser)httpSession.getAttribute("UserID");
         UserId = loginUser.getUserId();
-
+        accessPoint = loginUser.getAccessPoint();
 
         System.out.println("hello-IndexController/addVisitor");
         LocalDate localDate = LocalDate.now();
@@ -103,11 +104,12 @@ public class IndexPageController {
         visitor.setCardNumber(cardNumber);
         visitor.setRoomName(roomName);
         visitor.setUserId(UserId);
+        visitor.setAccessPoint(accessPoint);
 
         repository.addVisitors(visitor);
 
         List<Visitor> visitors = repository.selectVisitors(UserId, localDate.toString());
-        accessPoint = loginUser.getAccessPoint();
+
 
         String response = null;
        model.put("visitors", visitors);
