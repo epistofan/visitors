@@ -1,6 +1,34 @@
 
-CREATE TABLE visitorOfK1 (
-    VisitorId int identity(1,1),
+CREATE DATABASE visitors;
+
+
+
+CREATE TABLE accessUser (
+    UserID int identity(1,1),
+	UserName varchar(50),
+	UserPassword varchar(50),
+	AccessPoint varchar(50),
+    PRIMARY KEY (UserID)
+);
+
+CREATE TABLE responsiblePerson (
+    PersonId int identity(1,1) PRIMARY KEY,
+	ResponsiblePerson varchar(50),
+	Password varchar(50),
+
+);
+
+CREATE TABLE transport (
+    TransportID int identity(1,1) PRIMARY KEY,
+	TransportNumber varchar(50),
+	TransportModel varchar(50),
+
+);
+
+
+
+CREATE TABLE visitor (
+    VisitorId int identity(1,1) PRIMARY KEY,
 	OrderNumber int,
 	InDate datetime Default(getdate()),
 	InTime datetime Default(getdate()),
@@ -11,20 +39,18 @@ CREATE TABLE visitorOfK1 (
 	CardNumber varchar(3),
     Company varchar(50),
 	ResponsiblePerson varchar(50),
-
     RoomNumber varchar(50),
 	ResponsiblePersonIdentity varchar(50),
-    PRIMARY KEY (VisitorId)
+	AccessPoint varchar(50),
+	UserID int FOREIGN KEY REFERENCES accessUser(UserID)
+
+
 );
+
+
 
 CREATE INDEX idx_onid
-ON visitorOfK1 (OrderNumber, InDate);
+ON visitor (OrderNumber, InDate);
 
 
-CREATE TABLE accessUser (
-    UserId int identity(1,1),
-	UserName varchar(50),
-	UserPassword varchar(50),
-	AccessPoint varchar(50),
 
-);

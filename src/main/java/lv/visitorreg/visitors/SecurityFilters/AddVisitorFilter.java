@@ -1,13 +1,16 @@
-package lv.visitorreg.visitors;
+package lv.visitorreg.visitors.SecurityFilters;
+
+import lv.visitorreg.visitors.Domain.LoginUser;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = "/addVisitor")
-public class Filter1 implements Filter {
+public class AddVisitorFilter implements Filter {
 
 
     @Override
@@ -20,22 +23,24 @@ public class Filter1 implements Filter {
         RequestDispatcher rdObj = null;
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        request.getSession().getAttribute("UserID");
-        System.out.println("-");
-        System.out.println("filter 1");
-        System.out.println("-");
-        if(request.getSession().getAttribute("UserID")== null) {
-            rdObj = servletRequest.getRequestDispatcher("/login");
+
+        LoginUser loginUser;
+        loginUser = (LoginUser) request.getSession().getAttribute("UserID");
+
+        System.out.println("*");
+        System.out.println("addVisitor filter");
+        System.out.println("*");
+        if (loginUser!=null) {
+            System.out.println("session is active");
+            rdObj = servletRequest.getRequestDispatcher("/addVisitor");
 
             rdObj.forward(servletRequest, servletResponse);
-        }else {
-            rdObj = servletRequest.getRequestDispatcher("/index");
+        } else {
+            System.out.println("session ended");
+            rdObj = servletRequest.getRequestDispatcher("/");
 
             rdObj.forward(servletRequest, servletResponse);
         }
-
-
-
 
 
     }

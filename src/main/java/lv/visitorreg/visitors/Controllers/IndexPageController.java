@@ -9,7 +9,7 @@ import lv.visitorreg.visitors.Domain.ResponsiblePerson;
 import lv.visitorreg.visitors.Domain.Visitor;
 import lv.visitorreg.visitors.Logics.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 import java.util.Map;
 

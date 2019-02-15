@@ -39,4 +39,5 @@ public class LoginUser {
         this.accessPoint = accessPoint;
     }
 
+
 }

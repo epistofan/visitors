@@ -1,4 +1,4 @@
-package lv.visitorreg.visitors;
+package lv.visitorreg.visitors.SecurityFilters;
 
 import lv.visitorreg.visitors.DAL.UserCheckRepo;
 
@@ -50,7 +50,7 @@ public class AuthFilter implements Filter {
             loginUser.setUserId(loginUser.getUserId());
             loginUser.setUsername(servletRequest.getParameter("username"));
             request.getSession().setAttribute("UserID", loginUser);
-
+            request.getSession().setMaxInactiveInterval(-1);
             rdObj = servletRequest.getRequestDispatcher("/index");
 
 

@@ -23,7 +23,7 @@ public class Repository {
         java.sql.Connection conn = null;
         DbConnection dbConnection  = new DbConnection ();
 
-        String sql = "Select* from visitorOfK1 where DATEPART(yy, inDate)=? and DATEPART(mm, inDate)=? and DATEPART(dd, inDate)=? and UserID=? ORDER BY visitorOfK1.InTime";
+        String sql = "Select* from visitor where DATEPART(yy, inDate)=? and DATEPART(mm, inDate)=? and DATEPART(dd, inDate)=? and UserID=? ORDER BY visitor.InTime";
 
         List<String> dates = new ArrayList(Arrays.asList(date.split("\\D"))) ;
 
@@ -90,7 +90,7 @@ try {
         PreparedStatement preparedStatement = null;
         java.sql.Connection conn = null;
 
-        String sql = "insert into visitorOfK1 (OrderNumber, FirstName, LastName,  CardNumber, Company, roomNumber, ResponsiblePerson, UserID, AccessPoint )" +
+        String sql = "insert into visitor (OrderNumber, FirstName, LastName,  CardNumber, Company, roomNumber, ResponsiblePerson, UserID, AccessPoint )" +
                 "values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
                List<Visitor> visitorList = new ArrayList<>();
@@ -175,7 +175,7 @@ try {
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
 
 
-        String sql = "UPDATE visitorOfK1 SET OutTime = ?, OutDate=?, ResponsiblePersonIdentity = ? WHERE OrderNumber = ? and InDate = ?";
+        String sql = "UPDATE visitor SET OutTime = ?, OutDate=?, ResponsiblePersonIdentity = ? WHERE OrderNumber = ? and InDate = ?";
 
         List<Visitor> visitorList = new ArrayList<>();
         try {

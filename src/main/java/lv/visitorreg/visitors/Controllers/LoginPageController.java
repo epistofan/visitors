@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +17,8 @@ import java.util.Map;
 public class LoginPageController {
 
     @GetMapping("/")
-    public String login1(Map<String, Object> model) {
-
+    public String login1(HttpSession httpSession, Map<String, Object> model) {
+httpSession.invalidate();
 
         LocalDate localDate = LocalDate.now();
 
