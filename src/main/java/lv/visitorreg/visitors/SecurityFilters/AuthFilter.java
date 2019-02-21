@@ -51,7 +51,7 @@ public class AuthFilter implements Filter {
             loginUser.setUsername(servletRequest.getParameter("username"));
             request.getSession().setAttribute("UserID", loginUser);
             request.getSession().setMaxInactiveInterval(-1);
-            rdObj = servletRequest.getRequestDispatcher("/index");
+            rdObj = servletRequest.getRequestDispatcher("/home");
 
 
             rdObj.forward(servletRequest, servletResponse);

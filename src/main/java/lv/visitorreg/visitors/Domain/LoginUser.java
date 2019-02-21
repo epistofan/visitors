@@ -7,6 +7,8 @@ public class LoginUser {
     private String username;
     private String accessPoint;
 
+
+
     public int getUserId() {
         return UserId;
     }

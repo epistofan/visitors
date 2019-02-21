@@ -22,10 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 public class IndexPageController {
 
-            
+
     @Autowired
     Repository repository;
     @Autowired
@@ -33,7 +33,7 @@ public class IndexPageController {
 
 
     @PostMapping("/index")
-    public String index(String username, String psw, Map<String, Object> model) {
+    public List<Visitor> visitor(String username, String psw, Map<String, Object> model) {
 
         int i;
         String accessPoint;
@@ -50,15 +50,15 @@ public class IndexPageController {
         System.out.println(localDate.toString());
 
         List<Visitor> visitors = repository.selectVisitors(UserId, localDate.toString());
-        if (visitors.isEmpty()){
-            i=0;
+        if (visitors.isEmpty()) {
+            i = 0;
         }
         String response = null;
-       model.put("visitors", visitors);
-       model.put("date", localDate);
+        model.put("visitors", visitors);
+        model.put("date", localDate);
         model.put("accessPoint", accessPoint);
         model.put("response", response);
-        return "index";
+        return visitors;
     }
 
     @RequestMapping(value = "/addVisitor", method = RequestMethod.POST)
@@ -68,7 +68,7 @@ public class IndexPageController {
         int UserId;
         LoginUser LoginUser;
 
-        LoginUser loginUser = (LoginUser)httpSession.getAttribute("UserID");
+        LoginUser loginUser = (LoginUser) httpSession.getAttribute("UserID");
         UserId = loginUser.getUserId();
         accessPoint = loginUser.getAccessPoint();
 
@@ -76,20 +76,20 @@ public class IndexPageController {
         LocalDate localDate = LocalDate.now();
         List<Visitor> visitors1 = repository.selectVisitors(UserId, localDate.toString());
 
-        if(visitors1.isEmpty()){
+        if (visitors1.isEmpty()) {
             orderNumberCounter = 1;
 
-        }else{
+        } else {
 
-            orderNumberCounter = (visitors1.size()+1);
+            orderNumberCounter = (visitors1.size() + 1);
         }
         List<String> parameters = new ArrayList<>();
-            parameters.add(firstName);
-            parameters.add(lastName);
-            parameters.add(cardNumber);
-            parameters.add(company);
-            parameters.add(responsiblePerson);
-            parameters.add(roomName);
+        parameters.add(firstName);
+        parameters.add(lastName);
+        parameters.add(cardNumber);
+        parameters.add(company);
+        parameters.add(responsiblePerson);
+        parameters.add(roomName);
 
 
         Validator validator = new Validator();
@@ -112,7 +112,7 @@ public class IndexPageController {
 
 
         String response = null;
-       model.put("visitors", visitors);
+        model.put("visitors", visitors);
         model.put("date", localDate);
         model.put("accessPoint", accessPoint);
         model.put("response", response);
@@ -121,13 +121,12 @@ public class IndexPageController {
     }
 
 
-
     @RequestMapping(value = "/selectByDate", method = RequestMethod.POST)
     public String selectByDate(HttpSession httpSession, String selectedDate, Map<String, Object> model) {
         String accessPoint;
         int UserId;
 
-        LoginUser loginUser = (LoginUser)httpSession.getAttribute("UserID");
+        LoginUser loginUser = (LoginUser) httpSession.getAttribute("UserID");
         UserId = loginUser.getUserId();
         accessPoint = loginUser.getAccessPoint();
         System.out.println("working!");
@@ -148,7 +147,7 @@ public class IndexPageController {
         int j;
         int UserId;
         Timestamp inDate = null;
-        LoginUser loginUser = (LoginUser)httpSession.getAttribute("UserID");
+        LoginUser loginUser = (LoginUser) httpSession.getAttribute("UserID");
         UserId = loginUser.getUserId();
         String accessPoint = loginUser.getAccessPoint();
 
@@ -163,11 +162,11 @@ public class IndexPageController {
 
             List<Visitor> visitors1 = repository.selectVisitors(UserId, localDate.toString());
 
-            for(j=0; j<visitors1.size(); j++){
-                if(visitors1.get(j).getOrderNumber() == Integer.valueOf(orderNumber)){
+            for (j = 0; j < visitors1.size(); j++) {
+                if (visitors1.get(j).getOrderNumber() == Integer.valueOf(orderNumber)) {
                     inDate = visitors1.get(j).getInDate();
 
-                }else {
+                } else {
                     System.out.println("Order number not found");
                 }
 
@@ -187,7 +186,7 @@ public class IndexPageController {
             model.put("accessPoint", accessPoint);
             System.out.println("working add out time!");
             return "index";
-        }else{
+        } else {
             //LocalDate localDate = LocalDate.now();
 
             List<Visitor> visitors = repository.selectVisitors(UserId, localDate.toString());
@@ -201,5 +200,25 @@ public class IndexPageController {
             return "index";
         }
 
+    }
+
+    @CrossOrigin(origins = "http://192.168.40.100:8888")
+    @RequestMapping("/loginUser")
+    public List<Visitor> visitors() {
+        int i;
+        int UserId = 1;
+        LocalDate localDate = LocalDate.now();
+
+        System.out.println(localDate.toString());
+
+        List<Visitor> visitors = repository.selectVisitors(UserId, localDate.toString());
+        if (visitors.isEmpty()) {
+            i = 0;
+        }
+        if (visitors.isEmpty()) {
+            return null;
+        } else {
+            return visitors;
+        }
     }
 }
