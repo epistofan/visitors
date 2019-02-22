@@ -10,7 +10,6 @@ import lv.visitorreg.visitors.Domain.Visitor;
 import lv.visitorreg.visitors.Logics.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -142,7 +141,11 @@ public class IndexPageController {
     }
 
     @RequestMapping(value = "/addVisitorOutTime", method = RequestMethod.POST)
-    public String addVisitorOutTimeByOrderNumber(HttpSession httpSession, String orderNumber, String password, Map<String, Object> model) {
+    @ResponseBody
+    public ResponseTransfer addVisitorOutTimeByOrderNumber(@RequestBody AddOutTimeObject addOutTimeObject, HttpSession httpSession) {
+
+        System.out.println(addOutTimeObject.getOrderNumber());
+        System.out.println(addOutTimeObject.getPassword());
 
         int j;
         int UserId;
@@ -150,57 +153,35 @@ public class IndexPageController {
         LoginUser loginUser = (LoginUser) httpSession.getAttribute("UserID");
         UserId = loginUser.getUserId();
         String accessPoint = loginUser.getAccessPoint();
-
+        System.out.println(accessPoint);
         LocalDateTime localDateTime = LocalDateTime.now();
         LocalDate localDate = LocalDate.now();
 
-        if (!repository.selectResponsiblePerson(password).isEmpty()) {
+        if (repository.selectResponsiblePerson(addOutTimeObject.getPassword()).isEmpty()) {
+            System.out.println("responsible person not found");
 
-            List<ResponsiblePerson> responsiblePerson = repository.selectResponsiblePerson(password);
+            return new ResponseTransfer("nava atrasta atbildiga persona");
+        } else {
+
+            List<ResponsiblePerson> responsiblePerson = repository.selectResponsiblePerson(addOutTimeObject.getPassword());
 
             String responsiblePerson1 = responsiblePerson.get(0).getResponsiblePerson();
 
             List<Visitor> visitors1 = repository.selectVisitors(UserId, localDate.toString());
 
             for (j = 0; j < visitors1.size(); j++) {
-                if (visitors1.get(j).getOrderNumber() == Integer.valueOf(orderNumber)) {
+                if (visitors1.get(j).getOrderNumber() == Integer.valueOf(addOutTimeObject.getOrderNumber())) {
                     inDate = visitors1.get(j).getInDate();
-
-                } else {
-                    System.out.println("Order number not found");
                 }
-
             }
+            repository.addVisitorsOutTime(localDateTime, addOutTimeObject.getOrderNumber(), responsiblePerson1, inDate);
 
-
-            repository.addVisitorsOutTime(localDateTime, orderNumber, responsiblePerson1, inDate);
-
-
-            String response = null;
-            List<Visitor> visitors = repository.selectVisitors(UserId, localDate.toString());
-
-
-            model.put("visitors", visitors);
-            model.put("date", localDate);
-            model.put("response", response);
-            model.put("accessPoint", accessPoint);
             System.out.println("working add out time!");
-            return "index";
-        } else {
-            //LocalDate localDate = LocalDate.now();
 
-            List<Visitor> visitors = repository.selectVisitors(UserId, localDate.toString());
-
-            model.put("visitors", visitors);
-            model.put("date", localDate);
-            String response = "Atbildīga persona nav atrasta";
-            System.out.println("nav atrasta atbildiga persona!");
-            model.put("response", response);
-            model.put("accessPoint", accessPoint);
-            return "index";
         }
-
+        return new ResponseTransfer("ir iziets!!, gaidisim jus atkal");
     }
+
 
     @CrossOrigin(origins = "http://192.168.40.100:8888")
     @RequestMapping("/loginUser")

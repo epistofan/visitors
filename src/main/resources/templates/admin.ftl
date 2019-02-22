@@ -312,7 +312,7 @@ input[type=button], input[type=submit], input[type=reset] {
             <td>${visitor.inDateString}</td>
             <td>${visitor.inTimeString}</td>
             <td><#if visitor.outDate??>${visitor.outDate}</#if></td>
-            <td><#if visitor.outTime??>${visitor.outTime}</#if></td>
+            <td><#if visitor.addOutTimeObject??>${visitor.addOutTimeObject}</#if></td>
             <td>${visitor.firstName}</td>
             <td>${visitor.lastName}</td>
             <td>${visitor.cardNumber}</td>

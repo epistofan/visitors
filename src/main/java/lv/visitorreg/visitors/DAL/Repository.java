@@ -175,7 +175,7 @@ try {
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
 
 
-        String sql = "UPDATE visitor SET OutTime = ?, OutDate=?, ResponsiblePersonIdentity = ? WHERE OrderNumber = ? and InDate = ?";
+        String sql = "UPDATE visitor SET AddOutTimeObject = ?, OutDate=?, ResponsiblePersonIdentity = ? WHERE OrderNumber = ? and InDate = ?";
 
         List<Visitor> visitorList = new ArrayList<>();
         try {

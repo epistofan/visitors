@@ -12,6 +12,7 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/popupStyle.css" rel="stylesheet">
     <link href="css/popup2Style.css" rel="stylesheet">
+
 </head>
 
 <body onload="startTime()">
@@ -88,17 +89,18 @@ function checkTime(i) {
 
 
 <div class="form-popup" id="myForm">
-    <form action="/addVisitorOutTime" method="post" class="form-container">
+    <form id="addOutTime" class="form-container">
         <h2>Atzīmet uz iziešanu</h2>
 
         <center>  <input type="text" name="orderNumber", required="true", placeholder="Nr.p.k.">
             <input type="password" name="password", required="true", placeholder="Parole">
             <br>
-            <input type="submit">
+            <input type="button" onclick="addOutTime()" value="Submit">
 
             <button type="button" class="btn cancel" onclick="closeForm()">Close</button></center>
     </form>
 </div>
+<script src="js/addOutTime.js"></script>
 <script src="js/openForm.js"></script>
 </body>
 
