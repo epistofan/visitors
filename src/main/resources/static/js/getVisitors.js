@@ -1,3 +1,5 @@
+
+
 const app = document.getElementById('root');
 
 //const logo = document.createElement('img');
@@ -32,7 +34,14 @@ try{
   else if (request.status >= 200 && request.status < 400) {
     data.forEach(visitor => {
 
-          var table = document.getElementById("myTable");
+
+
+    var para = document.createElement("p");
+    var node = document.createTextNode(visitor.orderNumber + visitor.inDateString);
+    para.appendChild(node);
+      var element = document.getElementById("test");
+      element.appendChild(para);
+          /*var table = document.getElementById("myTable");
           var row = table.insertRow(1);
           var cell1 = row.insertCell(0);
           var cell2 = row.insertCell(1);
@@ -57,10 +66,11 @@ try{
           cell9.innerHTML = visitor.company;
           cell10.innerHTML = visitor.responsiblePerson;
           cell11.innerHTML = visitor.roomName;
-          cell12.innerHTML = visitor.responsiblePersonIdentity;
+          cell12.innerHTML = visitor.responsiblePersonIdentity;*/
 
         });
   }
 }
 
 request.send();
+

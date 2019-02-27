@@ -165,8 +165,8 @@ try {
     }
 
 
-    public void addVisitorsOutTime(LocalDateTime localDateTime, String orderNumber, String responsiblePerson1, Timestamp inDate){
-
+    public Integer addVisitorsOutTime(LocalDateTime localDateTime, String orderNumber, String responsiblePerson1, Timestamp inDate){
+        Integer result = 0;
         ResultSet resultSet = null;
         Statement statement = null;
         PreparedStatement preparedStatement = null;
@@ -175,7 +175,7 @@ try {
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
 
 
-        String sql = "UPDATE visitor SET AddOutTimeObject = ?, OutDate=?, ResponsiblePersonIdentity = ? WHERE OrderNumber = ? and InDate = ?";
+        String sql = "UPDATE visitor SET OutTime = ?, OutDate=?, ResponsiblePersonIdentity = ? WHERE OrderNumber = ? and InDate = ?";
 
         List<Visitor> visitorList = new ArrayList<>();
         try {
@@ -189,12 +189,12 @@ try {
             preparedStatement.setInt(4, Integer.valueOf(orderNumber));
             preparedStatement.setTimestamp(5, inDate);
 
-            preparedStatement.execute();
+            result = preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        return result;
     }
 
 

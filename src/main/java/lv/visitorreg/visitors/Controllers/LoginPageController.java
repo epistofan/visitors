@@ -18,7 +18,7 @@ public class LoginPageController {
 
     @GetMapping("/")
     public String login1(HttpSession httpSession, Map<String, Object> model) {
-httpSession.invalidate();
+    httpSession.invalidate();
 
         LocalDate localDate = LocalDate.now();
 

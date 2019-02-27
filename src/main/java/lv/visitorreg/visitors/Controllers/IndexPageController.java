@@ -61,11 +61,13 @@ public class IndexPageController {
     }
 
     @RequestMapping(value = "/addVisitor", method = RequestMethod.POST)
-    public String addVisitor(HttpSession httpSession, String firstName, String lastName, String cardNumber, String company, String responsiblePerson, String roomName, Map<String, Object> model) {
+    @ResponseBody
+    public Visitor addVisitor(@RequestBody Visitor visitor, HttpSession httpSession) {
+
         int orderNumberCounter;
         String accessPoint;
         int UserId;
-        LoginUser LoginUser;
+
 
         LoginUser loginUser = (LoginUser) httpSession.getAttribute("UserID");
         UserId = loginUser.getUserId();
@@ -73,50 +75,25 @@ public class IndexPageController {
 
         System.out.println("hello-IndexController/addVisitor");
         LocalDate localDate = LocalDate.now();
-        List<Visitor> visitors1 = repository.selectVisitors(UserId, localDate.toString());
+        List<Visitor> arrivedVisitors = repository.selectVisitors(UserId, localDate.toString());
 
-        if (visitors1.isEmpty()) {
+        if (arrivedVisitors.isEmpty()) {
             orderNumberCounter = 1;
 
         } else {
 
-            orderNumberCounter = (visitors1.size() + 1);
+            orderNumberCounter = (arrivedVisitors.size() + 1);
         }
-        List<String> parameters = new ArrayList<>();
-        parameters.add(firstName);
-        parameters.add(lastName);
-        parameters.add(cardNumber);
-        parameters.add(company);
-        parameters.add(responsiblePerson);
-        parameters.add(roomName);
-
 
         Validator validator = new Validator();
-        validator.validate(parameters);
 
-        Visitor visitor = new Visitor();
         visitor.setOrderNumber(orderNumberCounter);
-        visitor.setFirstName(firstName);
-        visitor.setLastName(lastName);
-        visitor.setCompany(company);
-        visitor.setResponsiblePerson(responsiblePerson);
-        visitor.setCardNumber(cardNumber);
-        visitor.setRoomName(roomName);
         visitor.setUserId(UserId);
         visitor.setAccessPoint(accessPoint);
 
         repository.addVisitors(visitor);
 
-        List<Visitor> visitors = repository.selectVisitors(UserId, localDate.toString());
-
-
-        String response = null;
-        model.put("visitors", visitors);
-        model.put("date", localDate);
-        model.put("accessPoint", accessPoint);
-        model.put("response", response);
-
-        return "index";
+        return visitor;
     }
 
 
@@ -146,7 +123,7 @@ public class IndexPageController {
 
         System.out.println(addOutTimeObject.getOrderNumber());
         System.out.println(addOutTimeObject.getPassword());
-
+        Integer result;
         int j;
         int UserId;
         Timestamp inDate = null;
@@ -174,32 +151,45 @@ public class IndexPageController {
                     inDate = visitors1.get(j).getInDate();
                 }
             }
-            repository.addVisitorsOutTime(localDateTime, addOutTimeObject.getOrderNumber(), responsiblePerson1, inDate);
+            result = repository.addVisitorsOutTime(localDateTime, addOutTimeObject.getOrderNumber(), responsiblePerson1, inDate);
 
             System.out.println("working add out time!");
+            System.out.println("update result " + result);
 
+            return new ResponseTransfer("ir iziets!!, gaidisim jus atkal");
         }
-        return new ResponseTransfer("ir iziets!!, gaidisim jus atkal");
+
     }
 
 
-    @CrossOrigin(origins = "http://192.168.40.100:8888")
+    //@CrossOrigin(origins = "http://192.168.40.100:8888")
     @RequestMapping("/loginUser")
-    public List<Visitor> visitors() {
-        int i;
-        int UserId = 1;
+    public List<Visitor> visitors(HttpSession httpSession) {
+
+        LoginUser loginUser = (LoginUser) httpSession.getAttribute("UserID");
+
+        int UserId = loginUser.getUserId();
         LocalDate localDate = LocalDate.now();
 
         System.out.println(localDate.toString());
 
         List<Visitor> visitors = repository.selectVisitors(UserId, localDate.toString());
-        if (visitors.isEmpty()) {
-            i = 0;
-        }
+
         if (visitors.isEmpty()) {
             return null;
         } else {
             return visitors;
         }
     }
-}
+
+    @RequestMapping("/getAccessPoint")
+    public LoginUser loginUser(HttpSession httpSession) {
+
+        LoginUser loginUser = (LoginUser) httpSession.getAttribute("UserID");
+
+            return loginUser;
+        }
+
+
+    }
+
