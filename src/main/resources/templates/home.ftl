@@ -42,7 +42,7 @@
         <th>Firma</th>
         <th>Atbildīga persona</th>
         <th>Telpas nr.</th>
-        <th id="paraksts">Paraksts</th>
+        <th>Paraksts</th>
     </tr>
 
 </table>

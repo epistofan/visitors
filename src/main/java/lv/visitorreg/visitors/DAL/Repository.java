@@ -5,7 +5,6 @@ import lv.visitorreg.visitors.Domain.Visitor;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ public class Repository {
 
     public List<Visitor> selectVisitors(int UserId, String date){
         ResultSet resultSet = null;
-        Statement statement = null;
+
         PreparedStatement preparedStatement = null;
         java.sql.Connection conn = null;
         DbConnection dbConnection  = new DbConnection ();
@@ -83,7 +82,7 @@ try {
     }
 
 
-    public void addVisitors(Visitor visitor){
+    public Integer addVisitors(Visitor visitor) {
 
         ResultSet resultSet = null;
         Statement statement = null;
@@ -93,11 +92,12 @@ try {
         String sql = "insert into visitor (OrderNumber, FirstName, LastName,  CardNumber, Company, roomNumber, ResponsiblePerson, UserID, AccessPoint )" +
                 "values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-               List<Visitor> visitorList = new ArrayList<>();
+        List<Visitor> visitorList = new ArrayList<>();
+        Integer visitorId = null;
         try {
-            DbConnection dbConnection  = new DbConnection ();
+            DbConnection dbConnection = new DbConnection();
             conn = dbConnection.getDbConnection();
-            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setInt(1, visitor.getOrderNumber());
             preparedStatement.setString(2, visitor.getFirstName());
@@ -110,12 +110,17 @@ try {
             preparedStatement.setInt(8, visitor.getUserId());
             preparedStatement.setString(9, visitor.getAccessPoint());
 
-            preparedStatement.execute();
 
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet != null && resultSet.next()) {
+                System.out.println("Generated Emp Id: " + resultSet.getInt(1));
+                visitorId = resultSet.getInt(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        return visitorId;
     }
 
 
@@ -166,9 +171,9 @@ try {
 
 
     public Integer addVisitorsOutTime(LocalDateTime localDateTime, String orderNumber, String responsiblePerson1, Timestamp inDate){
-        Integer result = 0;
+        Integer visitorId = null;
         ResultSet resultSet = null;
-        Statement statement = null;
+
         PreparedStatement preparedStatement = null;
         java.sql.Connection conn = null;
 
@@ -177,11 +182,10 @@ try {
 
         String sql = "UPDATE visitor SET OutTime = ?, OutDate=?, ResponsiblePersonIdentity = ? WHERE OrderNumber = ? and InDate = ?";
 
-        List<Visitor> visitorList = new ArrayList<>();
         try {
             DbConnection dbConnection  = new DbConnection ();
             conn = dbConnection.getDbConnection();
-            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setTimestamp(1, timestamp);
             preparedStatement.setTimestamp(2, timestamp);
@@ -189,13 +193,78 @@ try {
             preparedStatement.setInt(4, Integer.valueOf(orderNumber));
             preparedStatement.setTimestamp(5, inDate);
 
-            result = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getResultSet();
+            while (resultSet != null && resultSet.next()) {
+                System.out.println("Generated Emp Id: " + resultSet.getInt(1));
+                visitorId = resultSet.getInt(1);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return result;
+        return visitorId;
     }
 
 
+    public Visitor getVisitor(Integer visitorId) {
+
+        ResultSet resultSet = null;
+        Visitor visitor = new Visitor();
+        PreparedStatement preparedStatement = null;
+        java.sql.Connection conn = null;
+        DbConnection dbConnection  = new DbConnection ();
+
+        String sql = "Select* from visitor where VisitorId = ?";
+
+
+        try {
+            conn = dbConnection.getDbConnection();
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, visitorId);
+
+            resultSet = preparedStatement.executeQuery();
+
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            DateTimeFormatter dateTimeFormatter1 = DateTimeFormatter.ofPattern("HH:mm");
+
+            int i = 0;
+            while (resultSet.next()) {
+
+
+                visitor.setOrderNumber(resultSet.getInt(2));
+                visitor.setInDate(resultSet.getTimestamp(3));
+                visitor.setInDateString(resultSet.getTimestamp(3).toLocalDateTime().toLocalDate().format(dateTimeFormatter));
+                visitor.setInTime(resultSet.getTimestamp(4));
+                visitor.setInTimeString(resultSet.getTimestamp(4).toLocalDateTime().toLocalTime().format(dateTimeFormatter1));
+                try {
+                    //visitor.setOutDate(resultSet.getTimestamp(5));
+                    visitor.setOutDateString(resultSet.getTimestamp(5).toLocalDateTime().toLocalDate().format(dateTimeFormatter));
+
+                    //visitor.setOutTime(resultSet.getTimestamp(6));
+                    visitor.setOutTimeString(resultSet.getTimestamp(6).toLocalDateTime().toLocalTime().format(dateTimeFormatter1));
+                }catch (NullPointerException npe){
+
+                }
+                visitor.setFirstName(resultSet.getString(7));
+                visitor.setLastName(resultSet.getString(8));
+                visitor.setCardNumber(resultSet.getString(9));
+                visitor.setCompany(resultSet.getString(10));
+                visitor.setResponsiblePerson(resultSet.getString(11));
+
+                visitor.setRoomName(resultSet.getString(12));
+                visitor.setResponsiblePersonIdentity(resultSet.getString(13));
+
+                i++;
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+        return visitor;
+    }
 }

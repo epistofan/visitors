@@ -24,5 +24,5 @@ console.log('nava');
      document.getElementById("accessPoint").innerHTML = data.accessPoint;
 
 }
-}
+};
 accessPointRequest.send();

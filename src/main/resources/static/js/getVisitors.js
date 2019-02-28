@@ -1,11 +1,11 @@
 
 
-const app = document.getElementById('root');
+var app = document.getElementById('root');
 
 //const logo = document.createElement('img');
 //logo.src = 'image/img_avatar2.png';
 
-const container = document.createElement('div');
+var container = document.createElement('div');
 container.setAttribute('class', 'container');
 
 //app.appendChild(logo);
@@ -32,16 +32,17 @@ try{
         }
 
   else if (request.status >= 200 && request.status < 400) {
-    data.forEach(visitor => {
+    data.reverse();
+    for(i=0; i<data.length; i++){
 
 
-
-    var para = document.createElement("p");
-    var node = document.createTextNode(visitor.orderNumber + visitor.inDateString);
-    para.appendChild(node);
-      var element = document.getElementById("test");
-      element.appendChild(para);
-          /*var table = document.getElementById("myTable");
+   // var para = document.createElement("p");
+    //para.setAttribute("class", "serif");
+    //var node = document.createTextNode(data[i].orderNumber +" "+ data[i].inDateString + " "+ data[i].inTimeString+" "+ data[i].outDateString+" "+ data[i].outTimeString +" "+ data[i].firstName+" "+ data[i].lastName+" "+ data[i].cardNumber+" "+ data[i].company+" "+ data[i].responsiblePerson+" "+ data[i].roomName+" "+ data[i].responsiblePersonIdentity);
+    //para.appendChild(node);
+      //var element = document.getElementById("test");
+      //element.appendChild(para);
+          var table = document.getElementById("myTable");
           var row = table.insertRow(1);
           var cell1 = row.insertCell(0);
           var cell2 = row.insertCell(1);
@@ -55,22 +56,22 @@ try{
            var cell10 = row.insertCell(9);
            var cell11 = row.insertCell(10);
            var cell12 = row.insertCell(11);
-          cell1.innerHTML = visitor.orderNumber;
-          cell2.innerHTML = visitor.inDateString;
-          cell3.innerHTML = visitor.inTimeString;
-          cell4.innerHTML = visitor.outDateString;
-          cell5.innerHTML = visitor.outTimeString;
-          cell6.innerHTML = visitor.firstName;
-          cell7.innerHTML = visitor.lastName;
-           cell8.innerHTML = visitor.cardNumber;
-          cell9.innerHTML = visitor.company;
-          cell10.innerHTML = visitor.responsiblePerson;
-          cell11.innerHTML = visitor.roomName;
-          cell12.innerHTML = visitor.responsiblePersonIdentity;*/
+          cell1.innerHTML = data[i].orderNumber;
+          cell2.innerHTML = data[i].inDateString;
+          cell3.innerHTML = data[i].inTimeString;
+          cell4.innerHTML = data[i].outDateString;
+          cell5.innerHTML = data[i].outTimeString;
+          cell6.innerHTML = data[i].firstName;
+          cell7.innerHTML = data[i].lastName;
+           cell8.innerHTML = data[i].cardNumber;
+          cell9.innerHTML = data[i].company;
+          cell10.innerHTML = data[i].responsiblePerson;
+          cell11.innerHTML = data[i].roomName;
+          cell12.innerHTML = data[i].responsiblePersonIdentity;
 
-        });
+        }
   }
-}
+};
 
 request.send();
 

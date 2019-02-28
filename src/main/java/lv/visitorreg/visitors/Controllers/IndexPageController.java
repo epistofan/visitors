@@ -75,6 +75,9 @@ public class IndexPageController {
 
         System.out.println("hello-IndexController/addVisitor");
         LocalDate localDate = LocalDate.now();
+        LocalDateTime localDateTime = LocalDateTime.now();
+        Timestamp timestamp = Timestamp.valueOf(localDateTime);
+
         List<Visitor> arrivedVisitors = repository.selectVisitors(UserId, localDate.toString());
 
         if (arrivedVisitors.isEmpty()) {
@@ -87,13 +90,14 @@ public class IndexPageController {
 
         Validator validator = new Validator();
 
+        visitor.setInDate(timestamp);
+        visitor.setInTime(timestamp);
         visitor.setOrderNumber(orderNumberCounter);
         visitor.setUserId(UserId);
         visitor.setAccessPoint(accessPoint);
 
-        repository.addVisitors(visitor);
+        return repository.getVisitor(repository.addVisitors(visitor));
 
-        return visitor;
     }
 
 
@@ -119,11 +123,11 @@ public class IndexPageController {
 
     @RequestMapping(value = "/addVisitorOutTime", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseTransfer addVisitorOutTimeByOrderNumber(@RequestBody AddOutTimeObject addOutTimeObject, HttpSession httpSession) {
+    public Visitor addVisitorOutTimeByOrderNumber(@RequestBody AddOutTimeObject addOutTimeObject, HttpSession httpSession) {
 
         System.out.println(addOutTimeObject.getOrderNumber());
         System.out.println(addOutTimeObject.getPassword());
-        Integer result;
+        Integer visitorId;
         int j;
         int UserId;
         Timestamp inDate = null;
@@ -137,7 +141,7 @@ public class IndexPageController {
         if (repository.selectResponsiblePerson(addOutTimeObject.getPassword()).isEmpty()) {
             System.out.println("responsible person not found");
 
-            return new ResponseTransfer("nava atrasta atbildiga persona");
+            return null;
         } else {
 
             List<ResponsiblePerson> responsiblePerson = repository.selectResponsiblePerson(addOutTimeObject.getPassword());
@@ -151,12 +155,14 @@ public class IndexPageController {
                     inDate = visitors1.get(j).getInDate();
                 }
             }
-            result = repository.addVisitorsOutTime(localDateTime, addOutTimeObject.getOrderNumber(), responsiblePerson1, inDate);
+            visitorId = repository.addVisitorsOutTime(localDateTime, addOutTimeObject.getOrderNumber(), responsiblePerson1, inDate);
 
             System.out.println("working add out time!");
-            System.out.println("update result " + result);
+            System.out.println("update result " + visitorId);
 
-            return new ResponseTransfer("ir iziets!!, gaidisim jus atkal");
+
+
+            return repository.getVisitor(visitorId);
         }
 
     }

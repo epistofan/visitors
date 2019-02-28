@@ -1,7 +1,7 @@
 
-document.getElementById("paraksts").addEventListener("click", myFunction);
+document.getElementById("myTable").addEventListener("click", openWindow);
 
-function myFunction() {
+function openWindow() {
   document.getElementById("myForm").style.display = "block";
 }
 
