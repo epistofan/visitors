@@ -71,27 +71,41 @@
 <script src="js/addOutTime.js"></script>
 <script src="js/openForm.js"></script>
 
-<div class="" id="addVisitorForm">
-    <form class="form-container">
-        <h2>Reģistrēt viesi</h2>
-        <center>
-            <span class="a"> <input type="text" name="firstName", required="true", placeholder="Vārds"></span>
-            <span class="a"> <input type="text" name="lastName", required="true", placeholder="Uzvārds"></span>
 
-            <span class="a"><input type="text" name="cardNumber", required="true", placeholder="Caurlaides nr."></span>
 
-            <span class="a"><input type="text" name="company", required="true", placeholder="Firma"></span>
-            <span class="a"><input type="text" name="responsiblePerson", required="true", placeholder="Atbildīga persona"></span>
-            <span class="a"><input type="text" name="roomName", required="true", placeholder="Telpas nr."></span>
+<script src="js/addVisitor.js"></script>
 
-            <br>
-            <input type="button" onclick="addVisitor(firstName, lastName, cardNumber, company, responsiblePerson, roomName )" value="Submit">
-            <button type="button" class="btn cancel" onclick="closeForm3()">Close</button>
-        </center>
+<div class="test" >
+    <form action="/" method="get">
+        <button class="open-button" type="submit" class="logout-button">Iziet</button>
     </form>
 </div>
 
-<script src="js/addVisitor.js"></script>
+<br>
+<div class="test" id="addVisitorButton">
+    <button class="open-button" onclick="openAddVisitorForm()" id="button">Esmu atnacis!</button>
+</div>
+<div class="form-popup" id="addVisitorForm">
+    <form class="form-container">
+        <h2>Reģistrēt viesi</h2>
+
+        <span class="a"> <input type="text" name="firstName" placeholder="Vārds"/></span>
+        <span class="a"> <input type="text" name="lastName" placeholder="Uzvārds"/></span>
+
+        <span class="a"><input type="text" name="cardNumber" placeholder="Caurlaides nr."/></span>
+
+        <span class="a"><input type="text" name="company" placeholder="Firma"></span>
+        <span class="a"><input type="text" name="responsiblePerson" placeholder="Atbildīga persona"/></span>
+        <span class="a"><input type="text" name="roomName" placeholder="Telpas nr."/></span>
+
+        <br>
+        <input type="button" onclick="addVisitor(firstName, lastName, cardNumber, company, responsiblePerson, roomName )" value="Submit">
+        <button type="button" class="btn cancel" onclick="closeAddVisitorForm()">Close</button>
+
+    </form>
+</div>
+<script src="js/openAddVisitorForm.js"></script>
+
 </body>
 
 </html>

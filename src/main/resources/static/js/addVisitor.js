@@ -1,4 +1,10 @@
 function addVisitor(firstName, lastName, cardNumber, company, responsiblePerson, roomName){
+
+
+
+
+
+
 var f = firstName.value;
 
 console.log(f);
@@ -25,12 +31,12 @@ addVisitorRequest.send(data);
 
         }
 
-console.log(newVisitor.lastName);
+/*console.log(newVisitor.lastName);
 var para = document.createElement("p");
     var node = document.createTextNode(newVisitor.orderNumber +" "+ newVisitor.inDateString + " "+ newVisitor.inTimeString+" "+ newVisitor.outDateString+" "+ newVisitor.outTimeString +" "+ newVisitor.firstName+" "+ newVisitor.lastName+" "+ newVisitor.cardNumber+" "+ newVisitor.company+" "+ newVisitor.responsiblePerson+" "+ newVisitor.roomName+" "+newVisitor.responsiblePersonIdentity);
     para.appendChild(node);
       var element = document.getElementById("test");
-      element.appendChild(para);
+      element.appendChild(para);*/
         var table1 = document.getElementById("myTable");
         var row = table1.insertRow(-1);
         var cell1 = row.insertCell(0);

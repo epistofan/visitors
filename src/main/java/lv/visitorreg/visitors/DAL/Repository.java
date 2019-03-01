@@ -267,4 +267,69 @@ try {
 
         return visitor;
     }
+
+
+    public Visitor getVisitor(String orderNumber, Timestamp inDate) {
+
+        ResultSet resultSet = null;
+        Visitor visitor = new Visitor();
+        PreparedStatement preparedStatement = null;
+        java.sql.Connection conn = null;
+        DbConnection dbConnection  = new DbConnection ();
+
+        String sql = "SELECT * FROM visitor WHERE OrderNumber = ? and InDate = ?";
+
+
+        try {
+            conn = dbConnection.getDbConnection();
+            preparedStatement = conn.prepareStatement(sql);
+
+
+            preparedStatement.setInt(1, Integer.valueOf(orderNumber));
+            preparedStatement.setTimestamp(2, inDate);
+
+            resultSet = preparedStatement.executeQuery();
+
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            DateTimeFormatter dateTimeFormatter1 = DateTimeFormatter.ofPattern("HH:mm");
+
+            int i = 0;
+            while (resultSet.next()) {
+
+
+                visitor.setOrderNumber(resultSet.getInt(2));
+                visitor.setInDate(resultSet.getTimestamp(3));
+                visitor.setInDateString(resultSet.getTimestamp(3).toLocalDateTime().toLocalDate().format(dateTimeFormatter));
+                visitor.setInTime(resultSet.getTimestamp(4));
+                visitor.setInTimeString(resultSet.getTimestamp(4).toLocalDateTime().toLocalTime().format(dateTimeFormatter1));
+                try {
+                    //visitor.setOutDate(resultSet.getTimestamp(5));
+                    visitor.setOutDateString(resultSet.getTimestamp(5).toLocalDateTime().toLocalDate().format(dateTimeFormatter));
+
+                    //visitor.setOutTime(resultSet.getTimestamp(6));
+                    visitor.setOutTimeString(resultSet.getTimestamp(6).toLocalDateTime().toLocalTime().format(dateTimeFormatter1));
+                }catch (NullPointerException npe){
+
+                }
+                visitor.setFirstName(resultSet.getString(7));
+                visitor.setLastName(resultSet.getString(8));
+                visitor.setCardNumber(resultSet.getString(9));
+                visitor.setCompany(resultSet.getString(10));
+                visitor.setResponsiblePerson(resultSet.getString(11));
+
+                visitor.setRoomName(resultSet.getString(12));
+                visitor.setResponsiblePersonIdentity(resultSet.getString(13));
+
+                i++;
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+        return visitor;
+    }
 }

@@ -162,7 +162,7 @@ public class IndexPageController {
 
 
 
-            return repository.getVisitor(visitorId);
+            return repository.getVisitor(addOutTimeObject.getOrderNumber(),inDate);
         }
 
     }

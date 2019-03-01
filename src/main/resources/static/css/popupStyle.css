@@ -11,7 +11,7 @@ font-size: 15px;
   cursor: pointer;
   opacity: 0.8;
 position: relative;
-margin: 10px;
+margin: auto;
   width: 280px;
 }
 .logout-button {

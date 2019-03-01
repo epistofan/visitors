@@ -16,7 +16,7 @@ margin: 10px;
 }
 
 /* The popup form - hidden by default */
-.form-popup(selectByDate) {
+.form-popup {
    display: none;
    position: sticky;
    bottom: 0;
