@@ -39,6 +39,7 @@ var para = document.createElement("p");
       element.appendChild(para);*/
         var table1 = document.getElementById("myTable");
         var row = table1.insertRow(-1);
+
         var cell1 = row.insertCell(0);
         var cell2 = row.insertCell(1);
         var cell3 = row.insertCell(2);
@@ -63,6 +64,8 @@ var para = document.createElement("p");
         cell10.innerHTML = newVisitor.responsiblePerson;
         cell11.innerHTML = newVisitor.roomName;
         cell12.innerHTML = newVisitor.responsiblePersonIdentity;
+
+
 };
 
  document.getElementById("addVisitorForm").style.display = "none";

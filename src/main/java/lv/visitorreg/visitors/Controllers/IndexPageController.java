@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -75,10 +76,16 @@ public class IndexPageController {
 
         System.out.println("hello-IndexController/addVisitor");
         LocalDate localDate = LocalDate.now();
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
         LocalDateTime localDateTime = LocalDateTime.now();
+
+        String date = localDate.format(dateTimeFormatter);
+
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
 
-        List<Visitor> arrivedVisitors = repository.selectVisitors(UserId, localDate.toString());
+        List<Visitor> arrivedVisitors = repository.selectVisitors(UserId, date);
 
         if (arrivedVisitors.isEmpty()) {
             orderNumberCounter = 1;
@@ -95,6 +102,7 @@ public class IndexPageController {
         visitor.setOrderNumber(orderNumberCounter);
         visitor.setUserId(UserId);
         visitor.setAccessPoint(accessPoint);
+
 
         return repository.getVisitor(repository.addVisitors(visitor));
 
@@ -170,23 +178,34 @@ public class IndexPageController {
 
     //@CrossOrigin(origins = "http://192.168.40.100:8888")
     @RequestMapping("/loginUser")
-    public List<Visitor> visitors(HttpSession httpSession) {
+        public List<Visitor> visitors(String date, HttpSession httpSession) {
 
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+        List<Visitor> visitors = new ArrayList<>();
+
+        System.out.println("date " + date);
         LoginUser loginUser = (LoginUser) httpSession.getAttribute("UserID");
 
         int UserId = loginUser.getUserId();
         LocalDate localDate = LocalDate.now();
 
+
         System.out.println(localDate.toString());
 
-        List<Visitor> visitors = repository.selectVisitors(UserId, localDate.toString());
+        if (date == "undefined"){
+            date = localDate.format(dateTimeFormatter);
+            visitors = repository.selectVisitors(UserId, date);
 
-        if (visitors.isEmpty()) {
-            return null;
-        } else {
-            return visitors;
+                            }else {
+
+            visitors = repository.selectVisitors(UserId, date);
+
         }
+
+        return visitors;
     }
+
 
     @RequestMapping("/getAccessPoint")
     public LoginUser loginUser(HttpSession httpSession) {

@@ -75,11 +75,7 @@
 
 <script src="js/addVisitor.js"></script>
 
-<div class="test" >
-    <form action="/" method="get">
-        <button class="open-button" type="submit" class="logout-button">Iziet</button>
-    </form>
-</div>
+
 
 <br>
 <div class="test" id="addVisitorButton">
@@ -98,13 +94,43 @@
         <span class="a"><input type="text" name="responsiblePerson" placeholder="Atbildīga persona"/></span>
         <span class="a"><input type="text" name="roomName" placeholder="Telpas nr."/></span>
 
-        <br>
+
         <input type="button" onclick="addVisitor(firstName, lastName, cardNumber, company, responsiblePerson, roomName )" value="Submit">
         <button type="button" class="btn cancel" onclick="closeAddVisitorForm()">Close</button>
 
     </form>
 </div>
 <script src="js/openAddVisitorForm.js"></script>
+<br>
+<div class="test" >
+    <form action="/" method="get">
+        <button class="open-button" type="submit" class="logout-button">Iziet</button>
+    </form>
+</div>
+
+<div id="history"></div>
+<script>
+    var i = 0;
+console.log(i);
+    window.onscroll = function () {
+
+
+        i++;
+        console.log(i);
+        var minusDays = i;
+    var scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    var scrolled = window.scrollY;
+    if (Math.ceil(scrolled)===scrollable) {
+
+
+
+     loadHistory(minusDays);
+
+    }
+    };
+
+    </script>
+<script src="js/loadHistory.js"></script>
 
 </body>
 

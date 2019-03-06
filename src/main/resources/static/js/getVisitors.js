@@ -11,8 +11,25 @@ container.setAttribute('class', 'container');
 //app.appendChild(logo);
 app.appendChild(container);
 
+var d = new Date();
+
+var y = d.getFullYear();
+var m = d.getMonth()+1;
+var day = d.getDate();
+m = checkDate(m);
+day = checkDate(day);
+
+function checkDate(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+
+var date = day+"."+m+"."+y;
+
 var request = new XMLHttpRequest();
-request.open('GET', 'http://192.168.40.100:8888/loginUser', true);
+request.open('GET', 'http://192.168.40.100:8888/loginUser?date='+date, true);
 
 request.onload = function () {
 try{

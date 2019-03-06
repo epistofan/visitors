@@ -31,9 +31,9 @@ public class Repository {
         try {
             conn = dbConnection.getDbConnection();
             preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, dates.get(0));
+            preparedStatement.setString(1, dates.get(2));
             preparedStatement.setString(2, dates.get(1));
-            preparedStatement.setString(3, dates.get(2));
+            preparedStatement.setString(3, dates.get(0));
             preparedStatement.setInt(4, UserId);
 
             resultSet = preparedStatement.executeQuery();

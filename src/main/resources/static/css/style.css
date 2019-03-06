@@ -13,7 +13,10 @@ form1 {border: 1px solid white;
 
 
         }
+.democlass {
+    border: 5px solid red;
 
+}
 span.a {
   display: inline-block; /* the default for span */
 
