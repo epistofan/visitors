@@ -7,7 +7,7 @@
 
     <title>Visitors App</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet">
+
     <link href="css/style2.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/popupStyle.css" rel="stylesheet">
@@ -16,10 +16,7 @@
 </head>
 
 <body onload="startTime()">
-<h1 id="demo"></h1>
-<script src="js/date.js"></script>
-
-
+<h1 id="date"></h1>
 <h1 id="time"></h1>
 <script src="js/time.js"></script>
 
@@ -108,8 +105,8 @@
     </form>
 </div>
 
-<div id="history"></div>
-<script>
+
+<#--<script>
     var i = 0;
 console.log(i);
     window.onscroll = function () {
@@ -129,9 +126,15 @@ console.log(i);
     }
     };
 
-    </script>
-<script src="js/loadHistory.js"></script>
+    </script>-->
 
+
+<br>
+<div class="test" id="historyButton">
+    <button class="open-button" onclick="loadHistory(3)" id="button">Vesture</button>
+</div>
+<script src="js/loadHistory.js"></script>
+<div id="history"></div>
 </body>
 
 </html>

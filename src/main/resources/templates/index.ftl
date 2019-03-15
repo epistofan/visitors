@@ -70,12 +70,12 @@
         <form action="/selectByDate" method="post" class="form-container">
             <h2>Meklēt pēc datuma</h2>
 
-            <center> <input type="date" name="selectedDate", required="true">
+            <input type="date" name="selectedDate", required="true">
 
                 <br>
                 <input type="submit">
 
-                <button type="button" class="btn cancel" onclick="closeForm1()">Close</button></center>
+                <button type="button" class="btn cancel" onclick="closeForm1()">Close</button>
         </form>
     </div>
 

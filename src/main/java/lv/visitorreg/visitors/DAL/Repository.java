@@ -171,7 +171,7 @@ try {
 
 
     public Integer addVisitorsOutTime(LocalDateTime localDateTime, String orderNumber, String responsiblePerson1, Timestamp inDate){
-        Integer visitorId = null;
+        Integer result = null;
         ResultSet resultSet = null;
 
         PreparedStatement preparedStatement = null;
@@ -193,17 +193,13 @@ try {
             preparedStatement.setInt(4, Integer.valueOf(orderNumber));
             preparedStatement.setTimestamp(5, inDate);
 
-            preparedStatement.executeUpdate();
-            resultSet = preparedStatement.getResultSet();
-            while (resultSet != null && resultSet.next()) {
-                System.out.println("Generated Emp Id: " + resultSet.getInt(1));
-                visitorId = resultSet.getInt(1);
-            }
+             result = preparedStatement.executeUpdate();
+
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return visitorId;
+        return result;
     }
 
 

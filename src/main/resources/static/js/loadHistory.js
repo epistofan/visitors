@@ -1,10 +1,5 @@
 function loadHistory(minusDays){
 
-
-
-
-
-
         var d = new Date();
         d.setDate(d.getDate() - minusDays);
 
@@ -45,45 +40,49 @@ function loadHistory(minusDays){
                 element.appendChild(para);
             } else if (request.status >= 200 && request.status < 400) {
                 data.reverse();
+
+                var para = document.createElement("p");
+                var node = document.createTextNode(date);
+                para.appendChild(node);
+                var element = document.getElementById("history");
+                element.appendChild(para);
+                var table = document.createElement("table");
+                var historyElement = document.getElementById("history");
+                historyElement.appendChild(table);
+
+                var header = table.createTHead();
+                var headerRow = header.insertRow(0);
+
+                var headerCell1 = headerRow.insertCell(0);
+                var headerCell2 = headerRow.insertCell(1);
+                var headerCell3 = headerRow.insertCell(2);
+                var headerCell4 = headerRow.insertCell(3);
+                var headerCell5 = headerRow.insertCell(4);
+                var headerCell6 = headerRow.insertCell(5);
+
+                var headerCell7 = headerRow.insertCell(6);
+                var headerCell8 = headerRow.insertCell(7);
+                var headerCell9 = headerRow.insertCell(8);
+                var headerCell10 = headerRow.insertCell(9);
+                var headerCell11 = headerRow.insertCell(10);
+                var headerCell12 = headerRow.insertCell(11);
+
+                headerCell1.innerHTML = "Order";
+                headerCell2.innerHTML = "in datums";
+                headerCell3.innerHTML = "in laiks";
+                headerCell4.innerHTML = "out datums";
+                headerCell5.innerHTML = "out laiks";
+                headerCell6.innerHTML = "vards";
+                headerCell7.innerHTML = "uzvards";
+                headerCell8.innerHTML = "caurlaides nr.";
+                headerCell9.innerHTML = "firma";
+                headerCell10.innerHTML = "atbildiga persona";
+                headerCell11.innerHTML = "korpuss";
+                headerCell12.innerHTML = "paraksts";
+
+
                 for (i = 0; i < data.length; i++) {
 
-                    var para = document.createElement("p");
-                    var node = document.createTextNode(date);
-                    para.appendChild(node);
-                    var element = document.getElementById("history");
-                    element.appendChild(para);
-                var table = document.createElement("table");
-                    var historyElement = document.getElementById("history");
-                    historyElement.appendChild(table);
-                    var header = table.createTHead();
-                    var headerRow = header.insertRow(0);
-
-var headerCell1 = headerRow.insertCell(0);
-                    var headerCell2 = headerRow.insertCell(1);
-                    var headerCell3 = headerRow.insertCell(2);
-                    var headerCell4 = headerRow.insertCell(3);
-                    var headerCell5 = headerRow.insertCell(4);
-                    var headerCell6 = headerRow.insertCell(5);
-
-                    var headerCell7 = headerRow.insertCell(6);
-                    var headerCell8 = headerRow.insertCell(7);
-                    var headerCell9 = headerRow.insertCell(8);
-                    var headerCell10 = headerRow.insertCell(9);
-                    var headerCell11 = headerRow.insertCell(10);
-                    var headerCell12 = headerRow.insertCell(11);
-
-                    headerCell1.innerHTML = "Order";
-                    headerCell2.innerHTML = "in datums";
-                    headerCell3.innerHTML = "in laiks";
-                    headerCell4.innerHTML = "out datums";
-                    headerCell5.innerHTML = "out laiks";
-                    headerCell6.innerHTML = "vards";
-                    headerCell7.innerHTML = "uzvards";
-                    headerCell8.innerHTML = "caurlaides nr.";
-                    headerCell9.innerHTML = "firma";
-                    headerCell10.innerHTML = "atbildiga persona";
-                    headerCell11.innerHTML = "korpuss";
-                    headerCell12.innerHTML = "paraksts";
 
 
                     var row = table.insertRow(1);

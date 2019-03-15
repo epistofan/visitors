@@ -124,7 +124,7 @@ public class IndexPageController {
 
         model.put("visitors", visitors);
         model.put("date", selectedDate);
-        model.put("response", response);
+
         model.put("accessPoint", accessPoint);
         return "index";
     }
@@ -143,8 +143,13 @@ public class IndexPageController {
         UserId = loginUser.getUserId();
         String accessPoint = loginUser.getAccessPoint();
         System.out.println(accessPoint);
+
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
         LocalDateTime localDateTime = LocalDateTime.now();
         LocalDate localDate = LocalDate.now();
+        String date = localDate.format(dateTimeFormatter);
 
         if (repository.selectResponsiblePerson(addOutTimeObject.getPassword()).isEmpty()) {
             System.out.println("responsible person not found");
@@ -156,7 +161,7 @@ public class IndexPageController {
 
             String responsiblePerson1 = responsiblePerson.get(0).getResponsiblePerson();
 
-            List<Visitor> visitors1 = repository.selectVisitors(UserId, localDate.toString());
+            List<Visitor> visitors1 = repository.selectVisitors(UserId, date);
 
             for (j = 0; j < visitors1.size(); j++) {
                 if (visitors1.get(j).getOrderNumber() == Integer.valueOf(addOutTimeObject.getOrderNumber())) {
@@ -166,7 +171,7 @@ public class IndexPageController {
             visitorId = repository.addVisitorsOutTime(localDateTime, addOutTimeObject.getOrderNumber(), responsiblePerson1, inDate);
 
             System.out.println("working add out time!");
-            System.out.println("update result " + visitorId);
+            System.out.println("update result - " + visitorId);
 
 
 
