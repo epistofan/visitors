@@ -1,7 +1,7 @@
-function loadHistory(minusDays){
-
-        var d = new Date();
-        d.setDate(d.getDate() - minusDays);
+function loadHistory(selectedDate){
+    console.log(selectedDate.value);
+        var d = new Date(selectedDate.value);
+        console.log(d);
 
         var y = d.getFullYear();
         var m = d.getMonth() + 1;

@@ -1,5 +1,4 @@
-body {font-family: Arial, Helvetica, sans-serif;}
-* {box-sizing: border-box;}
+
 
 /* Button used to open the contact form - fixed at the bottom of the page */
 .open-button2 {
@@ -54,7 +53,7 @@ margin: 10px;
   padding: 16px 20px;
   border: none;
   cursor: pointer;
-  width: 100%;
+
   margin-bottom:10px;
   opacity: 0.8;
 }

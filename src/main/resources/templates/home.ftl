@@ -6,25 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Visitors App</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link href="css/style2.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/popupStyle.css" rel="stylesheet">
-    <link href="css/popup2Style.css" rel="stylesheet">
+
 
 </head>
 
 <body onload="startTime()">
+<div class="icon-bar">
+    <a class="active" href="#"><i class="fa fa-home"></i></a>
+    <a href="#about"><i class="fa fa-search"></i></a>
+    <a href="#" onclick="openAddVisitorForm()"><i class="fa fa-user-plus"></i></a>
+    <a href="#" onclick="openWindow()"><i class="fa fa-user-times"></i></a>
+    <a href="/"><i class="fa fa-sign-out"></i></a>
+</div>
+
+<div class="test">
 <h1 id="date"></h1>
 <h1 id="time"></h1>
 <script src="js/time.js"></script>
 
 <h1 id="accessPoint"></h1>
-
+</div>
 <script src="js/getAccessPoint.js"></script>
 
-<div style="overflow-x:auto;" >
+
+
+<div id="page1" style="overflow-x:auto;" class="page-padding">
 
 <table id="myTable">
     <tr>
@@ -57,12 +68,12 @@
     <form id="addOutTime" class="form-container">
         <h2>Atzīmet uz iziešanu</h2>
 
-        <center>  <input type="text" name="orderNumber", required="true", placeholder="Nr.p.k.">
+       <input type="text" name="orderNumber", required="true", placeholder="Nr.p.k.">
             <input type="password" name="password", required="true", placeholder="Parole">
             <br>
-            <input type="button" onclick="addOutTime()" value="Submit">
+        <span><button type="button" class="btn cancel" onclick="addOutTime()" >Ok</button></span>
 
-            <button type="button" class="btn cancel" onclick="closeForm()">Close</button></center>
+            <span><button type="button" class="btn cancel" onclick="closeForm()">Close</button></span>
     </form>
 </div>
 <script src="js/addOutTime.js"></script>
@@ -75,66 +86,48 @@
 
 
 <br>
-<div class="test" id="addVisitorButton">
-    <button class="open-button" onclick="openAddVisitorForm()" id="button">Esmu atnacis!</button>
-</div>
+
 <div class="form-popup" id="addVisitorForm">
     <form class="form-container">
         <h2>Reģistrēt viesi</h2>
 
-        <span class="a"> <input type="text" name="firstName" placeholder="Vārds"/></span>
-        <span class="a"> <input type="text" name="lastName" placeholder="Uzvārds"/></span>
+       <input type="text" name="firstName" placeholder="Vārds"/>
+       <input type="text" name="lastName" placeholder="Uzvārds"/>
 
-        <span class="a"><input type="text" name="cardNumber" placeholder="Caurlaides nr."/></span>
+        <input type="text" name="cardNumber" placeholder="Caurlaides nr."/>
 
-        <span class="a"><input type="text" name="company" placeholder="Firma"></span>
-        <span class="a"><input type="text" name="responsiblePerson" placeholder="Atbildīga persona"/></span>
-        <span class="a"><input type="text" name="roomName" placeholder="Telpas nr."/></span>
+        <input type="text" name="company" placeholder="Firma">
+       <input type="text" name="responsiblePerson" placeholder="Atbildīga persona"/>
+       <input type="text" name="roomName" placeholder="Telpas nr."/>
 
 
-        <input type="button" onclick="addVisitor(firstName, lastName, cardNumber, company, responsiblePerson, roomName )" value="Submit">
+        <button type="button" class="btn cancel" onclick="addVisitor(firstName, lastName, cardNumber, company, responsiblePerson, roomName )">Ok</button>
         <button type="button" class="btn cancel" onclick="closeAddVisitorForm()">Close</button>
 
     </form>
 </div>
 <script src="js/openAddVisitorForm.js"></script>
 <br>
-<div class="test" >
-    <form action="/" method="get">
-        <button class="open-button" type="submit" class="logout-button">Iziet</button>
+
+
+<div id="page2" class="page-padding"">
+    <a id="about" class="smooth"></a>
+<div style="padding-top: 70px">
+    <form class="form-container">
+        <h2>Meklēt pēc datuma</h2>
+
+        <input type="date" name="selectedDate", required="true">
+
+        <br>
+        <button type="button" class="btn cancel" onclick="loadHistory(selectedDate)">Ok</button>
+
+        <button type="button" class="btn cancel" onclick="clearHistory()">Dzest</button>
     </form>
 </div>
-
-
-<#--<script>
-    var i = 0;
-console.log(i);
-    window.onscroll = function () {
-
-
-        i++;
-        console.log(i);
-        var minusDays = i;
-    var scrollable = document.documentElement.scrollHeight - window.innerHeight;
-    var scrolled = window.scrollY;
-    if (Math.ceil(scrolled)===scrollable) {
-
-
-
-     loadHistory(minusDays);
-
-    }
-    };
-
-    </script>-->
-
-
-<br>
-<div class="test" id="historyButton">
-    <button class="open-button" onclick="loadHistory(3)" id="button">Vesture</button>
-</div>
-<script src="js/loadHistory.js"></script>
 <div id="history"></div>
+</div>
+<script src="js/clearHistory.js"></script>
+<script src="js/loadHistory.js"></script>
 </body>
 
 </html>
