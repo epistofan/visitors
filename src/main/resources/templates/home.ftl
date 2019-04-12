@@ -25,14 +25,12 @@
 </div>
 
 <div class="test">
-<h1 id="date"></h1>
-<h1 id="time"></h1>
-<script src="js/time.js"></script>
-
-<h1 id="accessPoint"></h1>
+    <span class="a" id="date"></span>
+    <span class="b" id="accessPoint"></span>
+    <span class="a" id="time"></span>
 </div>
 <script src="js/getAccessPoint.js"></script>
-
+<script src="js/time.js"></script>
 
 
 <div id="page1" style="overflow-x:auto;" class="page-padding">
@@ -82,7 +80,7 @@
 
 
 <script src="js/addVisitor.js"></script>
-
+<script src="js/checkForm.js"></script>
 
 
 <br>
@@ -91,14 +89,14 @@
     <form class="form-container">
         <h2>Reģistrēt viesi</h2>
 
-       <input type="text" name="firstName" placeholder="Vārds"/>
-       <input type="text" name="lastName" placeholder="Uzvārds"/>
+       <input type="text" name="firstName" onkeypress="checkForm(firstName)" placeholder="Vārds"/>
+       <input type="text" name="lastName" onkeypress="checkLastName(lastName)" placeholder="Uzvārds"/>
 
-        <input type="text" name="cardNumber" placeholder="Caurlaides nr."/>
+        <input type="text" name="cardNumber" onkeypress="checkForm(cardNumber)" placeholder="Caurlaides nr."/>
 
-        <input type="text" name="company" placeholder="Firma">
-       <input type="text" name="responsiblePerson" placeholder="Atbildīga persona"/>
-       <input type="text" name="roomName" placeholder="Telpas nr."/>
+        <input type="text" name="company" onkeypress="checkForm(company)" placeholder="Firma">
+       <input type="text" name="responsiblePerson" onkeypress="checkForm(responsiblePerson)" placeholder="Atbildīga persona"/>
+       <input type="text" name="roomName" onkeypress="checkForm(roomName)" placeholder="Telpas nr."/>
 
 
         <button type="button" class="btn cancel" onclick="addVisitor(firstName, lastName, cardNumber, company, responsiblePerson, roomName )">Ok</button>

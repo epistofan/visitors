@@ -1,7 +1,7 @@
 function addVisitor(firstName, lastName, cardNumber, company, responsiblePerson, roomName){
 
 
-
+let token = "";
 
 
 
@@ -15,7 +15,7 @@ var obj = { firstName: firstName.value, lastName: lastName.value, cardNumber: ca
 var addVisitorRequest = new XMLHttpRequest();
 addVisitorRequest.open('POST', 'http://192.168.40.100:8888/addVisitor','charset=utf-8', true);
 addVisitorRequest.setRequestHeader("Content-Type", "application/json");
-
+    addVisitorRequest.setRequestHeader('Authorization', token);
 
 var data = JSON.stringify(obj);
 

@@ -1,5 +1,7 @@
 package lv.visitorreg.visitors.SecurityFilters;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lv.visitorreg.visitors.DAL.UserCheckRepo;
 
 import lv.visitorreg.visitors.Domain.LoginUser;
@@ -10,8 +12,9 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
-@WebFilter(urlPatterns = "/login")
+//@WebFilter(urlPatterns = "/login")
 public class AuthFilter implements Filter {
 
     @Autowired
@@ -32,7 +35,7 @@ public class AuthFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-
+System.out.print(request.getHeader("Authorization"));
 
         System.out.println(servletRequest.getParameter("username"));
         System.out.println(servletRequest.getParameter("psw"));
@@ -46,11 +49,14 @@ public class AuthFilter implements Filter {
             rdObj.forward(servletRequest, servletResponse);
 
        }else{
+                    String token = Jwts.builder().setSubject("test").claim("roles", "user").setIssuedAt(new Date())
+                    .signWith(SignatureAlgorithm.HS256, "uldis").compact();
 
             loginUser.setUserId(loginUser.getUserId());
             loginUser.setUsername(servletRequest.getParameter("username"));
-            request.getSession().setAttribute("UserID", loginUser);
-            request.getSession().setMaxInactiveInterval(-1);
+            servletRequest.setAttribute("token", token);
+            servletRequest.setAttribute("UserID", loginUser);
+
             rdObj = servletRequest.getRequestDispatcher("/home");
 
 

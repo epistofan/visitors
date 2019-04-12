@@ -1,4 +1,4 @@
-package lv.visitorreg.visitors.Controllers;
+package lv.visitorreg.visitors.Domain;
 
 public class AccessPoint {
 

@@ -4,14 +4,21 @@ package lv.visitorreg.visitors.Controllers;
 import lv.visitorreg.visitors.DAL.Repository;
 import lv.visitorreg.visitors.DAL.UserCheckRepo;
 
+import lv.visitorreg.visitors.Domain.AddOutTimeObject;
 import lv.visitorreg.visitors.Domain.LoginUser;
 import lv.visitorreg.visitors.Domain.ResponsiblePerson;
 import lv.visitorreg.visitors.Domain.Visitor;
 import lv.visitorreg.visitors.Logics.Validator;
+import lv.visitorreg.visitors.Service.AddVisitorOutTimeService;
+import lv.visitorreg.visitors.Service.AddVisitorService;
+import lv.visitorreg.visitors.Service.GetVisitorsService;
+import lv.visitorreg.visitors.mbus;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -20,7 +27,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import java.util.List;
-import java.util.Map;
+
 
 @RestController
 public class IndexPageController {
@@ -30,192 +37,71 @@ public class IndexPageController {
     Repository repository;
     @Autowired
     UserCheckRepo userCheckRepo;
+    @Autowired
+    mbus mbus;
+    @Autowired
+    AddVisitorService addVisitorService;
+    @Autowired
+    AddVisitorOutTimeService addVisitorOutTimeService;
+    @Autowired
+    GetVisitorsService getVisitorsService;
 
-
-    @PostMapping("/index")
-    public List<Visitor> visitor(String username, String psw, Map<String, Object> model) {
-
-        int i;
-        String accessPoint;
-        int UserId;
-        LoginUser LoginUser;
-
-        LoginUser = userCheckRepo.checkLoginUser(username, psw);
-        UserId = LoginUser.getUserId();
-        accessPoint = LoginUser.getAccessPoint();
-
-        LocalDate localDate = LocalDate.now();
-
-        System.out.println("hello-IndexController/index");
-        System.out.println(localDate.toString());
-
-        List<Visitor> visitors = repository.selectVisitors(UserId, localDate.toString());
-        if (visitors.isEmpty()) {
-            i = 0;
-        }
-        String response = null;
-        model.put("visitors", visitors);
-        model.put("date", localDate);
-        model.put("accessPoint", accessPoint);
-        model.put("response", response);
-        return visitors;
-    }
 
     @RequestMapping(value = "/addVisitor", method = RequestMethod.POST)
     @ResponseBody
     public Visitor addVisitor(@RequestBody Visitor visitor, HttpSession httpSession) {
 
-        int orderNumberCounter;
-        String accessPoint;
-        int UserId;
-
 
         LoginUser loginUser = (LoginUser) httpSession.getAttribute("UserID");
-        UserId = loginUser.getUserId();
-        accessPoint = loginUser.getAccessPoint();
-
+        int UserId = loginUser.getUserId();
+        String accessPoint = loginUser.getAccessPoint();
         System.out.println("hello-IndexController/addVisitor");
-        LocalDate localDate = LocalDate.now();
-
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-
-        LocalDateTime localDateTime = LocalDateTime.now();
-
-        String date = localDate.format(dateTimeFormatter);
-
-        Timestamp timestamp = Timestamp.valueOf(localDateTime);
-
-        List<Visitor> arrivedVisitors = repository.selectVisitors(UserId, date);
-
-        if (arrivedVisitors.isEmpty()) {
-            orderNumberCounter = 1;
-
-        } else {
-
-            orderNumberCounter = (arrivedVisitors.size() + 1);
-        }
-
-        Validator validator = new Validator();
-
-        visitor.setInDate(timestamp);
-        visitor.setInTime(timestamp);
-        visitor.setOrderNumber(orderNumberCounter);
-        visitor.setUserId(UserId);
-        visitor.setAccessPoint(accessPoint);
 
 
-        return repository.getVisitor(repository.addVisitors(visitor));
+
+        return addVisitorService.addVisitor(UserId, accessPoint, visitor);
 
     }
 
-
-    @RequestMapping(value = "/selectByDate", method = RequestMethod.POST)
-    public String selectByDate(HttpSession httpSession, String selectedDate, Map<String, Object> model) {
-        String accessPoint;
-        int UserId;
-
-        LoginUser loginUser = (LoginUser) httpSession.getAttribute("UserID");
-        UserId = loginUser.getUserId();
-        accessPoint = loginUser.getAccessPoint();
-        System.out.println("working!");
-        List<Visitor> visitors = repository.selectVisitors(UserId, selectedDate);
-        String response = null;
-
-
-        model.put("visitors", visitors);
-        model.put("date", selectedDate);
-
-        model.put("accessPoint", accessPoint);
-        return "index";
-    }
 
     @RequestMapping(value = "/addVisitorOutTime", method = RequestMethod.POST)
     @ResponseBody
     public Visitor addVisitorOutTimeByOrderNumber(@RequestBody AddOutTimeObject addOutTimeObject, HttpSession httpSession) {
 
-        System.out.println(addOutTimeObject.getOrderNumber());
-        System.out.println(addOutTimeObject.getPassword());
-        Integer visitorId;
-        int j;
-        int UserId;
-        Timestamp inDate = null;
+
+
         LoginUser loginUser = (LoginUser) httpSession.getAttribute("UserID");
-        UserId = loginUser.getUserId();
+        int userId = loginUser.getUserId();
         String accessPoint = loginUser.getAccessPoint();
-        System.out.println(accessPoint);
 
 
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        return addVisitorOutTimeService.addOutTime(userId, accessPoint, addOutTimeObject);
 
-        LocalDateTime localDateTime = LocalDateTime.now();
-        LocalDate localDate = LocalDate.now();
-        String date = localDate.format(dateTimeFormatter);
-
-        if (repository.selectResponsiblePerson(addOutTimeObject.getPassword()).isEmpty()) {
-            System.out.println("responsible person not found");
-
-            return null;
-        } else {
-
-            List<ResponsiblePerson> responsiblePerson = repository.selectResponsiblePerson(addOutTimeObject.getPassword());
-
-            String responsiblePerson1 = responsiblePerson.get(0).getResponsiblePerson();
-
-            List<Visitor> visitors1 = repository.selectVisitors(UserId, date);
-
-            for (j = 0; j < visitors1.size(); j++) {
-                if (visitors1.get(j).getOrderNumber() == Integer.valueOf(addOutTimeObject.getOrderNumber())) {
-                    inDate = visitors1.get(j).getInDate();
-                }
-            }
-            visitorId = repository.addVisitorsOutTime(localDateTime, addOutTimeObject.getOrderNumber(), responsiblePerson1, inDate);
-
-            System.out.println("working add out time!");
-            System.out.println("update result - " + visitorId);
-
-
-
-            return repository.getVisitor(addOutTimeObject.getOrderNumber(),inDate);
-        }
 
     }
 
 
     //@CrossOrigin(origins = "http://192.168.40.100:8888")
-    @RequestMapping("/loginUser")
-        public List<Visitor> visitors(String date, HttpSession httpSession) {
+    @RequestMapping("/getUsers")
+        public List<Visitor> visitors(String date) {
 
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        //HttpServletRequest request = (HttpServletRequest) servletRequest;
 
-        List<Visitor> visitors = new ArrayList<>();
+       // LoginUser loginUser = (LoginUser) request.getAttribute("UserID");
 
-        System.out.println("date " + date);
-        LoginUser loginUser = (LoginUser) httpSession.getAttribute("UserID");
-
-        int UserId = loginUser.getUserId();
-        LocalDate localDate = LocalDate.now();
+        int userId = 1; //loginUser.getUserId();
 
 
-        System.out.println(localDate.toString());
 
-        if (date == "undefined"){
-            date = localDate.format(dateTimeFormatter);
-            visitors = repository.selectVisitors(UserId, date);
+        return getVisitorsService.getVisitors(userId, date);
 
-                            }else {
-
-            visitors = repository.selectVisitors(UserId, date);
-
-        }
-
-        return visitors;
     }
 
 
     @RequestMapping("/getAccessPoint")
-    public LoginUser loginUser(HttpSession httpSession) {
-
-        LoginUser loginUser = (LoginUser) httpSession.getAttribute("UserID");
+    public LoginUser loginUser(ServletRequest servletRequest) {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        LoginUser loginUser = (LoginUser) request.getAttribute("UserID");
 
             return loginUser;
         }

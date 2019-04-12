@@ -29,7 +29,7 @@ function checkDate(i) {
 var date = day+"."+m+"."+y;
 
 var request = new XMLHttpRequest();
-request.open('GET', 'http://192.168.40.100:8888/loginUser?date='+date, true);
+request.open('GET', 'http://192.168.40.100:8888/getUsers?date='+date, true);
 
 request.onload = function () {
 try{

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/addVisitor")
+//@WebFilter(urlPatterns = "/addVisitor")
 public class AddVisitorFilter implements Filter {
 
 

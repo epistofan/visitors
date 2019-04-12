@@ -6,17 +6,20 @@
 </head>
 <body>
 
+<script src="js/login.js"></script>
 
-<center>
 
-    <form class="login" action="/login" method="post">
+    <form class="login">
         <h1 class="login-title">Sveiki!</h1>
         <input type="text" class="login-input" placeholder="Lietotājvārds" autofocus name="username" required>
-        <input type="password" class="login-input" placeholder="Parole" name="psw" required>
-        <input type="submit" value="Aiziet!" class="login-button">
+        <input type="password" class="login-input" placeholder="Parole" name="password" required>
+
+
+        <button type="button" class="login-button" onclick="login(username, password)">Aiziet!</button>
+
         <p class="login-lost"><a href="">sazināties</a></p>
     </form>
 
-</center>
+
 </body>
 </html>
