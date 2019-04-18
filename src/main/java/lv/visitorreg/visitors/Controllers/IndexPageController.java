@@ -77,13 +77,17 @@ public class IndexPageController {
 
     @RequestMapping(value = "/addVisitorOutTime", method = RequestMethod.POST)
     @ResponseBody
-    public Visitor addVisitorOutTimeByOrderNumber(@RequestBody AddOutTimeObject addOutTimeObject, HttpSession httpSession) {
+    public Visitor addVisitorOutTimeByOrderNumber(@RequestBody AddOutTimeObject addOutTimeObject, ServletRequest servletRequest) {
 
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
 
+        String token = request.getHeader("Authorization");
 
-        LoginUser loginUser = (LoginUser) httpSession.getAttribute("UserID");
-        int userId = loginUser.getUserId();
-        String accessPoint = loginUser.getAccessPoint();
+        HashMap userInfo = tokenManager.parseToken(token);
+
+        int userId = (int) userInfo.get("userId");
+
+        String accessPoint = (String) userInfo.get("accessPoint");
 
 
         return addVisitorOutTimeService.addOutTime(userId, accessPoint, addOutTimeObject);
