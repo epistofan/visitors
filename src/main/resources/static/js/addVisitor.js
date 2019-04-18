@@ -1,24 +1,16 @@
 function addVisitor(firstName, lastName, cardNumber, company, responsiblePerson, roomName){
 
-
-let token = "";
-
-
-
-var f = firstName.value;
-
-console.log(f);
+    let token2 = document.getElementById('token').value;
 
 
 var obj = { firstName: firstName.value, lastName: lastName.value, cardNumber: cardNumber.value, company: company.value, responsiblePerson: responsiblePerson.value, roomName:roomName.value };
 
 var addVisitorRequest = new XMLHttpRequest();
-addVisitorRequest.open('POST', 'http://192.168.40.100:8888/addVisitor','charset=utf-8', true);
+addVisitorRequest.open('POST', 'http://192.168.40.100:8888/addVisitor',true);
 addVisitorRequest.setRequestHeader("Content-Type", "application/json");
-    addVisitorRequest.setRequestHeader('Authorization', token);
+    addVisitorRequest.setRequestHeader('Authorization', token2);
 
 var data = JSON.stringify(obj);
-
 
 addVisitorRequest.send(data);
 

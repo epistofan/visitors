@@ -9,7 +9,7 @@
 <script src="js/login.js"></script>
 
 
-    <form class="login">
+    <form class="login" id="loginForm">
         <h1 class="login-title">Sveiki!</h1>
         <input type="text" class="login-input" placeholder="Lietotājvārds" autofocus name="username" required>
         <input type="password" class="login-input" placeholder="Parole" name="password" required>

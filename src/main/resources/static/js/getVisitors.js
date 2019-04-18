@@ -1,9 +1,5 @@
-
-
 var app = document.getElementById('root');
 
-//const logo = document.createElement('img');
-//logo.src = 'image/img_avatar2.png';
 
 var container = document.createElement('div');
 container.setAttribute('class', 'container');
@@ -28,8 +24,14 @@ function checkDate(i) {
 
 var date = day+"."+m+"."+y;
 
-var request = new XMLHttpRequest();
+let token1 = document.getElementById('token').value;
+
+let request = new XMLHttpRequest();
 request.open('GET', 'http://192.168.40.100:8888/getUsers?date='+date, true);
+request.setRequestHeader('Authorization', token1);
+
+request.send();
+
 
 request.onload = function () {
 try{
@@ -90,5 +92,5 @@ try{
   }
 };
 
-request.send();
+
 

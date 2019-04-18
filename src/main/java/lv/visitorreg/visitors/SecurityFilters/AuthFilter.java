@@ -37,11 +37,15 @@ public class AuthFilter implements Filter {
 
 System.out.print(request.getHeader("Authorization"));
 
-        System.out.println(servletRequest.getParameter("username"));
-        System.out.println(servletRequest.getParameter("psw"));
+        String authHeader[] = request.getHeader("Authorization").split(",");
+
+        //System.out.println(servletRequest.getParameter("username"));
+        //System.out.println(servletRequest.getParameter("psw"));
 
         LoginUser loginUser;
-        loginUser = userCheckRepo.checkLoginUser(servletRequest.getParameter("username"),servletRequest.getParameter("psw"));
+
+        loginUser = userCheckRepo.checkLoginUser(authHeader[0], authHeader[1]);
+
         if(loginUser == null) {
             rdObj = servletRequest.getRequestDispatcher("/login");
 
@@ -49,11 +53,12 @@ System.out.print(request.getHeader("Authorization"));
             rdObj.forward(servletRequest, servletResponse);
 
        }else{
-                    String token = Jwts.builder().setSubject("test").claim("roles", "user").setIssuedAt(new Date())
-                    .signWith(SignatureAlgorithm.HS256, "uldis").compact();
+            System.out.print("accepted");
 
-            loginUser.setUserId(loginUser.getUserId());
-            loginUser.setUsername(servletRequest.getParameter("username"));
+
+            String token = Jwts.builder().setSubject("test").claim("roles", "loginUser").setIssuedAt(new Date()).signWith(SignatureAlgorithm.HS256, "uldis").compact();
+
+
             servletRequest.setAttribute("token", token);
             servletRequest.setAttribute("UserID", loginUser);
 

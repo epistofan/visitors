@@ -16,6 +16,7 @@
 </head>
 
 <body onload="startTime()">
+<input type="hidden" id="token" value=${token}>
 <div class="icon-bar">
     <a class="active" href="#"><i class="fa fa-home"></i></a>
     <a href="#about"><i class="fa fa-search"></i></a>
@@ -101,7 +102,7 @@
 
         <button type="button" class="btn cancel" onclick="addVisitor(firstName, lastName, cardNumber, company, responsiblePerson, roomName )">Ok</button>
         <button type="button" class="btn cancel" onclick="closeAddVisitorForm()">Close</button>
-
+        <input type="hidden" id="token" value=${token}>
     </form>
 </div>
 <script src="js/openAddVisitorForm.js"></script>
@@ -126,6 +127,7 @@
 </div>
 <script src="js/clearHistory.js"></script>
 <script src="js/loadHistory.js"></script>
+
 </body>
 
 </html>
