@@ -1,10 +1,19 @@
 
 function openAddVisitorForm() {
-  document.getElementById("addVisitorForm").style.display = "block";
-}
 
+  document.getElementById("addVisitorForm").style.display = "block";
+  $('html, body').animate({
+    scrollTop: $("#addVisitorForm").offset().top
+  }, 1000);
+
+}
 function closeAddVisitorForm() {
-  document.getElementById("addVisitorForm").style.display = "none";
+  $("#addVisitorForm").hide();
+
+  $('html, body').animate({
+    scrollTop: $("#myTable").offset().top
+  }, 1000);
+
 }
 
 

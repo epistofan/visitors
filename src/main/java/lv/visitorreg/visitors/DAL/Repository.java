@@ -170,7 +170,7 @@ try {
     }
 
 
-    public Integer addVisitorsOutTime(LocalDateTime localDateTime, String orderNumber, String responsiblePerson1, Timestamp inDate){
+    public Integer addVisitorsOutTime(LocalDateTime localDateTime, int visitorId, String responsiblePerson1){
         Integer result = null;
         ResultSet resultSet = null;
 
@@ -180,7 +180,7 @@ try {
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
 
 
-        String sql = "UPDATE visitor SET OutTime = ?, OutDate=?, ResponsiblePersonIdentity = ? WHERE OrderNumber = ? and InDate = ?";
+        String sql = "UPDATE visitor SET OutTime = ?, OutDate=?, ResponsiblePersonIdentity = ? WHERE VisitorId = ?";
 
         try {
             DbConnection dbConnection  = new DbConnection ();
@@ -190,8 +190,8 @@ try {
             preparedStatement.setTimestamp(1, timestamp);
             preparedStatement.setTimestamp(2, timestamp);
             preparedStatement.setString(3, responsiblePerson1);
-            preparedStatement.setInt(4, Integer.valueOf(orderNumber));
-            preparedStatement.setTimestamp(5, inDate);
+            preparedStatement.setInt(4, visitorId);
+
 
              result = preparedStatement.executeUpdate();
 
@@ -227,7 +227,7 @@ try {
             int i = 0;
             while (resultSet.next()) {
 
-
+                visitor.setVisitorId(resultSet.getInt(1));
                 visitor.setOrderNumber(resultSet.getInt(2));
                 visitor.setInDate(resultSet.getTimestamp(3));
                 visitor.setInDateString(resultSet.getTimestamp(3).toLocalDateTime().toLocalDate().format(dateTimeFormatter));

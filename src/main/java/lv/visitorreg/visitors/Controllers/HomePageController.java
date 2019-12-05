@@ -25,7 +25,7 @@ public class HomePageController {
 
 
 
-        return "http://192.168.40.100:8888/home";
+        return "http://10.10.10.100:8888/home";
     }
 
     @GetMapping("/home")

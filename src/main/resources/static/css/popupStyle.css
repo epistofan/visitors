@@ -30,25 +30,27 @@ margin: 10px;
 /* The popup form - hidden by default */
 .form-popup {
   display: none;
-  position: sticky;
-  bottom: 0;
+
+  padding-top: 70px;
   right: 15px;
-  z-index: 9;
+  width: 90%;
+  margin: auto;
 }
 
 /* Add styles to the form container */
 .form-container {
-  max-width: 300px;
-  padding: 10px;
-  background-color: #e6e6e6;
+
+  width: 90%;
+  margin: auto;
+  text-align: center;
 
 }
 
 /* Full-width input fields */
 .form-container input[type=text], .form-container input[type=password], .form-container input[type=date] {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
+  width: 15%;
+
+
   border: none;
   background: #f1f1f1;
 }

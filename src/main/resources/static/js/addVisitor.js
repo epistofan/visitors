@@ -1,66 +1,127 @@
-function addVisitor(firstName, lastName, cardNumber, company, responsiblePerson, roomName){
+function addVisitor(){
 
-    let token2 = document.getElementById('token').value;
+    let token2 = $("#token").text();
+    let firstName = $("#firstName").val();
+    let lastName = $("#lastName").val();
+    let cardNumber = $("#cardNumber").val();
+    let company = $("#company").val();
+    let responsiblePerson = $("#responsiblePerson").val();
+    let roomName = $("#roomName").val();
 
+let obj = {firstName, lastName, cardNumber, company, responsiblePerson, roomName };
 
-var obj = { firstName: firstName.value, lastName: lastName.value, cardNumber: cardNumber.value, company: company.value, responsiblePerson: responsiblePerson.value, roomName:roomName.value };
-
-var addVisitorRequest = new XMLHttpRequest();
-addVisitorRequest.open('POST', 'http://192.168.40.100:8888/addVisitor',true);
+let addVisitorRequest = new XMLHttpRequest();
+addVisitorRequest.open('POST', 'http://10.10.10.100:8888/addVisitor',true);
 addVisitorRequest.setRequestHeader("Content-Type", "application/json");
     addVisitorRequest.setRequestHeader('Authorization', token2);
 
-var data = JSON.stringify(obj);
+let data = JSON.stringify(obj);
 
 addVisitorRequest.send(data);
 
     addVisitorRequest.onload = function() {
 
-        if (addVisitorRequest.status >= 200 && addVisitorRequest.status < 400) {
-            console.log(addVisitorRequest.responseText);
 
-            var newVisitor = JSON.parse(this.response);
-
-        }
-
-/*console.log(newVisitor.lastName);
-var para = document.createElement("p");
-    var node = document.createTextNode(newVisitor.orderNumber +" "+ newVisitor.inDateString + " "+ newVisitor.inTimeString+" "+ newVisitor.outDateString+" "+ newVisitor.outTimeString +" "+ newVisitor.firstName+" "+ newVisitor.lastName+" "+ newVisitor.cardNumber+" "+ newVisitor.company+" "+ newVisitor.responsiblePerson+" "+ newVisitor.roomName+" "+newVisitor.responsiblePersonIdentity);
-    para.appendChild(node);
-      var element = document.getElementById("test");
-      element.appendChild(para);*/
-        var table1 = document.getElementById("myTable");
-        var row = table1.insertRow(-1);
-
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
-        var cell5 = row.insertCell(4);
-        var cell6 = row.insertCell(5);
-        var cell7 = row.insertCell(6);
-        var cell8 = row.insertCell(7);
-        var cell9 = row.insertCell(8);
-        var cell10 = row.insertCell(9);
-        var cell11 = row.insertCell(10);
-        var cell12 = row.insertCell(11);
-        cell1.innerHTML = newVisitor.orderNumber;
-        cell2.innerHTML = newVisitor.inDateString;
-        cell3.innerHTML = newVisitor.inTimeString;
-        cell4.innerHTML = newVisitor.outDateString;
-        cell5.innerHTML = newVisitor.outTimeString;
-        cell6.innerHTML = newVisitor.firstName;
-        cell7.innerHTML = newVisitor.lastName;
-        cell8.innerHTML = newVisitor.cardNumber;
-        cell9.innerHTML = newVisitor.company;
-        cell10.innerHTML = newVisitor.responsiblePerson;
-        cell11.innerHTML = newVisitor.roomName;
-        cell12.innerHTML = newVisitor.responsiblePersonIdentity;
-
-
+            let newVisitor = JSON.parse(this.response);
+let visitorObject = {
+    orderNumber: newVisitor.orderNumber,
+    inDate: newVisitor.inDateString,
+    inTime: newVisitor.inTimeString,
+    outDate: newVisitor.outDateString,
+    outTime: newVisitor.outTimeString,
+    firstName: newVisitor.firstName,
+    lastName: newVisitor.lastName,
+    cardNumber: newVisitor.cardNumber,
+    company: newVisitor.company,
+    responsiblePerson: newVisitor.responsiblePerson,
+    roomName: newVisitor.roomName,
+    responsiblePersonIdentity: newVisitor.responsiblePersonIdentity
 };
 
- document.getElementById("addVisitorForm").style.display = "none";
 
+
+        let row = $("<div>").attr("class","row").attr("id",newVisitor.visitorId).click(async function () {
+
+            let visitorId = $(this).attr("id");
+
+            let psw = prompt("Please enter your pass");
+            let obj = {visitorId: visitorId, password: psw};
+
+            const response = await fetch("http://10.10.10.100:8888/addVisitorOutTime", {
+                headers: {"Authorization": $("#token").text(), "Content-Type": "application/json"},
+                method: "POST",
+                body: JSON.stringify(obj)
+            });
+
+            let data = await response.json();
+
+            JSON.stringify(data);
+
+            visitorObject.outDate = data.outDateString;
+            visitorObject.outTime = data.outTimeString;
+            visitorObject.responsiblePersonIdentity = data.responsiblePersonIdentity;
+
+            $(this).children().remove();
+            //let row = $("<div>").attr("class","row").attr("id",newVisitor.visitorId);
+            $.each(Object.values(visitorObject), function (index, value) {
+
+               let cell = $("<div>").attr("class", "cell").attr("id", newVisitor.visitorId).text(value);
+
+                row.append(cell);
+
+
+
+            });
+           // $("#blocks").append(row);
+        });
+            $.each(Object.values(visitorObject), function (index, value) {
+                let cell = $("<div>").attr("class", "cell").attr("id", newVisitor.visitorId).text(value);
+
+                row.append(cell);
+            });
+
+
+            $("#blocks").append(row);
+
+
+
+
+
+ document.getElementById("addVisitorForm").style.display = "none";
+    $('html, body').animate({
+        scrollTop: $("#blocks").offset().top
+    }, 1000);
+
+    $("#firstName").val("");
+    $("#lastName").val("");
+    $("#company").val("");
+    $("#cardNumber").val("");
+    $("#roomName").val("");
+    $("#responsiblePerson").val("");
+}
+
+
+
+}
+function addHeader() {
+
+    let th = $("<div>").attr("class", "cell").text("Nr.p.k.");
+    let th1 =  $("<div>").attr("class", "cell").text("Ienākšanas datums");
+    let th2 =  $("<div>").attr("class", "cell").text("Ienākšanas laiks");
+    let th3 = $("<div>").attr("class", "cell").text("Iziešanas datums");
+    let th4 =$("<div>").attr("class", "cell").text("Iziešanas laiks");
+    let th5 =  $("<div>").attr("class", "cell").text("Vārds");
+    let th6 = $("<div>").attr("class", "cell").text("Uzvārds");
+    let th7 = $("<div>").attr("class", "cell").text("Caurlaides nr.");
+    let th8 = $("<div>").attr("class", "cell").text("Firma");
+    let th9 = $("<div>").attr("class", "cell").text("Atbildīga persona");
+    let th10 = $("<div>").attr("class", "cell").text("Telpas nr.");
+    let th11 = $("<div>").attr("class", "cell").text("Paraksts");
+
+    let row = $("<div>").attr("class", "header");
+
+    row.append().append(th).append(th1).append(th2).append(th3).append(th4).append(th5).append(th6).append(th7).append(th8).append(th9).append(th10).append(th11);
+
+    $("#blocks").append(row);
 
 }

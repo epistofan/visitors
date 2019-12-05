@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.Map;
@@ -37,8 +39,7 @@ public class LoginPageController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ResponseBody
-    public AccessToken login(ServletRequest servletRequest) {
+        public String login(ServletRequest servletRequest, ServletResponse servletResponse) {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         request.getHeader("Authorization");
@@ -50,22 +51,20 @@ public class LoginPageController {
         loginUser = userCheckRepo.checkLoginUser(authHeader[0], authHeader[1]);
         if (loginUser == null) {
             AccessToken accessToken = new AccessToken();
-            accessToken.setHomeUrl("http://192.168.40.100:8888");
+            accessToken.setHomeUrl("http://10.10.10.100:8888");
 
-            return accessToken;
+            return "login";
 
         } else {
 
+            HttpServletResponse response = (HttpServletResponse) servletResponse;
 
 
-            System.out.println("hello2-LoginController");
-            AccessToken accessToken = new AccessToken();
 
-            accessToken.setToken(tokenManager.generateToken(loginUser));
+            response.setHeader("Authorization", tokenManager.generateToken(loginUser));
 
-            accessToken.setHomeUrl("http://192.168.40.100:8888/home");
 
-            return accessToken;
+            return "home";
         }
 
     }

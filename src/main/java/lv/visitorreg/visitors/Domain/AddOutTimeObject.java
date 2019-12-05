@@ -3,16 +3,16 @@ package lv.visitorreg.visitors.Domain;
 public class AddOutTimeObject {
 
 
-    private String orderNumber;
+    private int visitorId;
     private String password;
 
 
-    public String getOrderNumber() {
-        return orderNumber;
+    public int getVisitorId() {
+        return visitorId;
     }
 
-    public void setOrderNumber(String orderNumber) {
-        this.orderNumber = orderNumber;
+    public void setVisitorId(int visitorId) {
+        this.visitorId = visitorId;
     }
 
     public String getPassword() {

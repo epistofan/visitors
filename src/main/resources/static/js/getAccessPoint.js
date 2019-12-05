@@ -1,12 +1,12 @@
 
 console.log('start script');
 
-let token = document.getElementById("token").value;
+let token = $("#token").text();
 
 
 
 var accessPointRequest = new XMLHttpRequest();
-accessPointRequest.open('GET', 'http://192.168.40.100:8888/getAccessPoint', true);
+accessPointRequest.open('GET', 'http://10.10.10.100:8888/getAccessPoint', true);
 accessPointRequest.setRequestHeader('Authorization', token);
 accessPointRequest.onload = function () {
 try{

@@ -44,21 +44,21 @@ public class AddVisitorOutTimeService {
 
                 String responsiblePerson1 = responsiblePerson.get(0).getResponsiblePerson();
 
-                List<Visitor> visitors1 = repository.selectVisitors(userId, date);
+               /* List<Visitor> visitors1 = repository.selectVisitors(userId, date);
 
 
                 for (j = 0; j < visitors1.size(); j++) {
-                    if (visitors1.get(j).getOrderNumber() == Integer.valueOf(addOutTimeObject.getOrderNumber())) {
+                    if (visitors1.get(j).getOrderNumber() == Integer.valueOf(addOutTimeObject.getVisitorId()) {
                         inDate = visitors1.get(j).getInDate();
                     }
-                }
-                visitorId = repository.addVisitorsOutTime(localDateTime, addOutTimeObject.getOrderNumber(), responsiblePerson1, inDate);
+                }*/
+                visitorId = repository.addVisitorsOutTime(localDateTime, addOutTimeObject.getVisitorId(), responsiblePerson1);
 
                 System.out.println("working add out time!");
                 System.out.println("update result - " + visitorId);
 
 
-                return repository.getVisitor(addOutTimeObject.getOrderNumber(), inDate);
+                return repository.getVisitor(addOutTimeObject.getVisitorId());
             }
         }
 

@@ -19,10 +19,10 @@ function loadHistory(selectedDate){
         var date = day + "." + m + "." + y;
         console.log(date);
 
-    let token4 = document.getElementById('token').value;
+    let token4 = $("#token").text();
 
         var request = new XMLHttpRequest();
-        request.open('GET', 'http://192.168.40.100:8888/getUsers?date=' + date, true);
+        request.open('GET', 'http://10.10.10.100:8888/getUsers?date=' + date, true);
         request.setRequestHeader('Authorization', token4);
 
         request.onload = function () {

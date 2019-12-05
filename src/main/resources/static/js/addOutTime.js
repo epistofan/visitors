@@ -1,15 +1,16 @@
 function addOutTime(){
     let token3 = document.getElementById('token').value;
-var a = document.forms["addOutTime"]["orderNumber"].value;
-var b = document.forms["addOutTime"]["password"].value;
 
-console.log(a);
-console.log(b);
+
+    let psw = prompt("Please enter your pass", "Harry Potter");
+
+
+
 
 var obj = { orderNumber: a, password: b };
 
 var addOutTimeRequest = new XMLHttpRequest();
-    addOutTimeRequest.open('POST', 'http://192.168.40.100:8888/addVisitorOutTime','charset=utf-8', true);
+    addOutTimeRequest.open('POST', 'http://10.10.10.100:8888/addVisitorOutTime','charset=utf-8', true);
     addOutTimeRequest.setRequestHeader("Content-Type", "application/json");
     addOutTimeRequest.setRequestHeader('Authorization', token3);
 

@@ -9,7 +9,7 @@ import java.time.LocalTime;
 
 public class Visitor {
 
-        private String visitorId;
+        private int visitorId;
 
         private String inDateString;
         private String inTimeString;
@@ -30,6 +30,7 @@ public class Visitor {
         private String responsiblePersonIdentity;
         private int UserId;
         private String accessPoint;
+
 
 
     public String getAccessPoint() {
@@ -141,11 +142,11 @@ public class Visitor {
         this.orderNumber = orderNumber;
     }
 
-    public String getVisitorId() {
+    public int getVisitorId() {
         return visitorId;
     }
 
-    public void setVisitorId(String visitorId) {
+    public void setVisitorId(int visitorId) {
         this.visitorId = visitorId;
     }
 

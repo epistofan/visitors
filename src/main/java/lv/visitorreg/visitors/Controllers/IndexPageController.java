@@ -60,13 +60,13 @@ public class IndexPageController {
 
             String token = request.getHeader("Authorization");
 
-        HashMap userInfo = tokenManager.parseToken(token);
+             HashMap userInfo = tokenManager.parseToken(token);
 
             int userId = (int) userInfo.get("userId");
 
-        String accessPoint = (String) userInfo.get("accessPoint");
+            String accessPoint = (String) userInfo.get("accessPoint");
 
-        System.out.println("hello-IndexController/addVisitor");
+            System.out.println("hello-IndexController/addVisitor");
 
 
 

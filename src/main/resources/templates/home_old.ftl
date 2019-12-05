@@ -18,25 +18,24 @@
 <body>
 <p hidden id="token"></p>
 <div class="icon-bar">
-    <a class="active" href="#">Sakums</a>
-    <a href="#" id="openF" onclick="openAddVisitorForm()">Jauns Viesis</a>
+    <a class="active" href="#"><i class="fa fa-home"></i></a>
+    <a href="#about"><i class="fa fa-search"></i></a>
+    <a href="#" id="openF" onclick="openAddVisitorForm()"><i class="fa fa-user-plus"></i></a>
+   
+    <a href="/"><i class="fa fa-sign-out"></i></a>
+</div>
 
-        <div class="test"><p id="date"></p>
-      <p id="accessPoint">K1</p>
-       <p id="time"></p>
-        </div>
-
-    <a href="#about">Vesture</a>
-    <a href="/">Iziet</a>
+<div class="icon-bar">
+    <span class="a" id="date"></span>
+    <span class="b" id="accessPoint"></span>
+    <span class="a" id="time"></span>
 </div>
 
 
 
+<div id="page1" style="overflow-x:auto;" class="page-padding">
 
-
-<div>
-
-<#--<table id="myTable">
+<table id="myTable">
     <tr>
         <th>Nr.p.k.</th>
         <th>Ienākšanas datums</th>
@@ -52,38 +51,33 @@
         <th>Paraksts</th>
     </tr>
 
-</table>-->
-
-    <div id="blocks" class="blocks">
-
-    </div>
-</div>
+</table>
     <div class="form-popup" id="addVisitorForm">
         <h2>Reģistrēt viesi</h2>
-        <div class="form-container">
+        <table class="form-container">
+            <tr>
 
 
+                <th>   <input type="text" id="firstName" onkeypress="checkForm(firstName)" placeholder="Vārds"/></th>
 
-                <input type="text" id="firstName" onkeypress="checkForm()" placeholder="Vārds" autocomplete="off">
+                <th><input type="text" id="lastName" onkeypress="checkLastName(lastName)" placeholder="Uzvārds"/></th>
 
-              <input type="text" id="lastName" onkeypress="checkLastName()" placeholder="Uzvārds" autocomplete="off">
+                <th> <input type="text" id="cardNumber" onkeypress="checkForm(cardNumber)" placeholder="Caurlaides nr."/></th>
 
-              <input type="text" id="cardNumber" onkeypress="checkForm()" placeholder="Caurlaides nr." autocomplete="off">
+                <th>  <input type="text" id="company" onkeypress="checkForm(company)" placeholder="Firma"></th>
 
-                <input type="text" id="company" onkeypress="checkForm()" placeholder="Firma" autocomplete="off">
-
-                <input type="text" id="responsiblePerson" onkeypress="checkForm()" placeholder="Atbildīga persona" autocomplete="off">
-                <input type="text" id="roomName" onkeypress="checkForm()" placeholder="Telpas nr." autocomplete="off">
-<div id="buttons">
-            <button class="cancelbtn" onclick="addVisitor()">Ok</button>
-            <button class="cancelbtn" onclick="closeAddVisitorForm()">Close</button>
-        </div>
-        </div>
+                <th> <input type="text" id="responsiblePerson" onkeypress="checkForm(responsiblePerson)" placeholder="Atbildīga persona"/></th>
+                <th><input type="text" id="roomName" onkeypress="checkForm(roomName)" placeholder="Telpas nr."/></th>
 
 
-
+            </tr>
+        </table>
+        <div id="buttons">
+       <button type="button" class="cancelbtn" onclick="addVisitor()">Ok</button>
+        <button type="button" class="cancelbtn" onclick="closeAddVisitorForm()">Close</button>
+            </div>
     </div>
-
+</div>
 
 <div id="test"></div>
 
@@ -105,7 +99,7 @@
 
 
 
-<#--<br>
+<br>
 
 
 
@@ -126,8 +120,8 @@
         <button type="button" class="btn cancel" onclick="clearHistory()">Dzest</button>
     </form>
 </div>
-<div id="history"></div>-->
-
+<div id="history"></div>
+</div>
 
 
 </body>

@@ -12,7 +12,7 @@ let obj = { username: a, password: b };
 
 
 let loginRequest = new XMLHttpRequest();
-    loginRequest.open('POST', 'http://192.168.40.100:8888/login',true);
+    loginRequest.open('POST', 'http://10.10.10.100:8888/login',true);
     loginRequest.setRequestHeader("Content-Type", "application/json");
     loginRequest.setRequestHeader('Authorization', username.value);
 
@@ -23,12 +23,18 @@ let loginRequest = new XMLHttpRequest();
 
    loginRequest.onload = function () {
         try {
-            let data = JSON.parse(this.response);
 
-        let token = data.token ;
-        let url = data.homeUrl;
-        console.log(url+'?token='+token);
-window.location = url+'?token='+token;
+
+            let tkn = loginRequest.getResponseHeader("Authorization");
+
+
+            document.getElementsByTagName("html")[0].innerHTML = "";
+            document.getElementsByTagName("html")[0].innerHTML = loginRequest.response;
+          $("#token").text(tkn);
+
+
+            startTime();
+getVisitors();
 
 
         }catch(err){
