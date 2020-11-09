@@ -22,7 +22,7 @@ public class DbConnection {
 
             String dbURL = "jdbc:sqlserver://localhost;databaseName=visitors";
             String user = "sa";
-            String pass = "Admin18";
+            String pass = "";
             conn = DriverManager.getConnection(dbURL, user, pass);
             if (conn != null) {
                 DatabaseMetaData dm = (DatabaseMetaData) conn.getMetaData();
